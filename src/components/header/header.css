@@ -1,0 +1,18 @@
+.title_div{
+   color: white;
+   margin: 15px;
+   font-family: 'Noto Sans JP', sans-serif;
+}
+
+.title_h1{
+    letter-spacing: 10px;
+    font-size: 4em;
+    margin-bottom: 0%;
+    margin-top: 0;
+}
+
+.subtitle{
+    margin-top: 0%;
+    font-size: 2em;
+    letter-spacing: 4px;
+}
