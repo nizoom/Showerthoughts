@@ -1,0 +1,18 @@
+.login-btn{
+    padding: 1.5em;
+    background-color: #53CBC8;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: large;
+    border-radius: 16px;
+}
+
+.login-btn:hover{
+    background-color:black;
+    color:white;
+}
+
+.login-btn-wrapper{
+   
+
+}
+
