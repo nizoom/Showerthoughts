@@ -12,12 +12,12 @@
 }
 
 .title-component{
-    flex: 4;
+    flex: 3;
     order:1
 }
 
 .loginBtn-component{
-    flex: 1;
+    flex: 2;
     order:2;
 }
 /* header{
