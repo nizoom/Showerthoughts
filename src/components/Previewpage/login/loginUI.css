@@ -5,8 +5,18 @@
     border: solid 5px white;
     margin-top: 1%;
     margin: auto;
- 
     height: 50vh;
     width: 30vw;
 
+}
+
+.username-field{
+    background-color: gray;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.password-field{
+    background-color: gray;
+    padding: 20px;
 }
