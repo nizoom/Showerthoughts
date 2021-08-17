@@ -19,7 +19,7 @@ const LandingPage = (props) => {
                 <Header className="title-component" />
                 <LoginBtn className="loginBtn-component" returnUIActivation={RevealLoginUI} />
             </header>
-            {activeUI ? <LoginUI /> : null}
+            {/* {activeUI ? <LoginUI /> : null} */}
         </div>
     )
 }

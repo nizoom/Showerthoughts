@@ -11,7 +11,14 @@
 }
 
 .create-account-box{
-
+    text-align: center;
+    color: white;
+    position: relative;
+    border: solid 5px white;
+    margin-top: 1%;
+    margin: auto;
+    width: 30vw;
+    height: 70vh;
 }
 
 .username-field{

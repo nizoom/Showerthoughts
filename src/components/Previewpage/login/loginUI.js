@@ -9,7 +9,8 @@ import "firebase/firestore";
 
 import { useAuth, currentUser } from "../../../contexts/authcontext";
 
-import GoogleLogin from "./loginfuncs/existinguserloginfuncs.js"
+import GoogleLogin from "./loginfuncs/existinguserloginfuncs";
+import Header from "../../header/header";
 
 
 
@@ -17,10 +18,16 @@ import GoogleLogin from "./loginfuncs/existinguserloginfuncs.js"
 
 const LoginUI = (props) => {
 
+    console.log("UI APPEAR")
+
     const [newAccount, activateNewAccount] = useState(false);
 
     function activateSignup() {
         activateNewAccount(true)
+    }
+
+    function goBackToLogin() {
+        activateNewAccount(false)
     }
 
     const [signIn, setSignedIn] = useState(false);
@@ -87,67 +94,76 @@ const LoginUI = (props) => {
     }
 
     return (
-        <div className="login-box">
-            {!newAccount ? <form>
-                <h2> Login </h2>
-                <div className="username-field">
-                    <label htmlFor="username"> Username: </label>
-                    <input type="text" name="username" id="username" />
-                </div >
-                <div className="password-field">
-                    <label htmlFor="password"> Password: </label>
-                    <input type="password" name="password" id="password" />
-                </div>
-                <div className="submit-login-div">
-                    <button type="submit" className="submit-login-btn"> Submit </button>
-                </div>
-                <div className="create-account-instructions">
-
-                    <hr />
-                    <p> Click
-
-                        <em style={{ color: "orange", cursor: "pointer" }}
-                            onClick={activateSignup}
-                        > Here </em>
-
-                        to create an account</p>
-                </div>
-                <div className="login-with-google-div">
-                    <button type="submit" className="submit-login-btn-google"
-                        onClick={googleAuth}
-
-                    > Or login with Google </button>
-                </div>
-
-            </form> :
-                <form onSubmit={handleNewUserSubmit}>
-                    {/* {error.length > 1 ? alert(error) : null} */}
-                    {currentUser && currentUser.email}
-                    <h2> Create an Account! </h2>
-                    <div className="email-addy-field">
-                        <label htmlFor="email-addy"> Email: </label>
-                        <input type="email" name="email-addy" id="email-addy" ref={emailRef} />
-                    </div>
+        <div>
+            <Header />
+            <div >
+                {!newAccount ? <form className="login-box">
+                    <h2> Login </h2>
                     <div className="username-field">
                         <label htmlFor="username"> Username: </label>
-                        <input type="text" name="username" id="username" ref={userNameRef} />
+                        <input type="text" name="username" id="username" />
                     </div >
-
                     <div className="password-field">
                         <label htmlFor="password"> Password: </label>
-                        <input type="password" name="password" id="password" ref={passwordRef} />
-                    </div>
-                    <div className="password-cnfm-field">
-                        <label htmlFor="password-cfrm"> Confirm Password : </label>
-                        <input type="password" name="password-cnfrm" id="password-cnfrm" ref={passwordConfirmRef} />
+                        <input type="password" name="password" id="password" />
                     </div>
                     <div className="submit-login-div">
-                        <button type="submit" className="submit-login-btn" disabled={loading}> Submit </button>
+                        <button type="submit" className="submit-login-btn"> Submit </button>
+                    </div>
+                    <div className="create-account-instructions">
+
+                        <hr />
+                        <p> Click
+
+                            <em style={{ color: "orange", cursor: "pointer" }}
+                                onClick={activateSignup}
+                            > Here </em>
+
+                            to create an account</p>
+                    </div>
+                    <div className="login-with-google-div">
+                        <button type="submit" className="submit-login-btn-google"
+                            onClick={googleAuth}
+
+                        > Or login with Google </button>
                     </div>
 
+                </form> :
+                    <form onSubmit={handleNewUserSubmit} className="create-account-box">
+                        {/* {error.length > 1 ? alert(error) : null} */}
+                        {currentUser && currentUser.email}
+                        <h2> Create an Account! </h2>
+                        <div className="email-addy-field">
+                            <label htmlFor="email-addy"> Email: </label>
+                            <input type="email" name="email-addy" id="email-addy" ref={emailRef} />
+                        </div>
+                        <div className="username-field">
+                            <label htmlFor="username"> Username: </label>
+                            <input type="text" name="username" id="username" ref={userNameRef} />
+                        </div >
 
-                </form>
-            }
+                        <div className="password-field">
+                            <label htmlFor="password"> Password: </label>
+                            <input type="password" name="password" id="password" ref={passwordRef} />
+                        </div>
+                        <div className="password-cnfm-field">
+                            <label htmlFor="password-cfrm"> Confirm Password : </label>
+                            <input type="password" name="password-cnfrm" id="password-cnfrm" ref={passwordConfirmRef} />
+                        </div>
+                        <div className="submit-login-div">
+                            <button type="submit" className="submit-login-btn" disabled={loading}> Sign up </button>
+                        </div>
+                        <div className="submit-login-div">
+                            <button type="submit" className="submit-login-btn" disabled={loading}
+                                onClick={goBackToLogin}
+                            > Already have an account?
+                            </button>
+                        </div>
+
+
+                    </form>
+                }
+            </div>
         </div>
     )
 }
