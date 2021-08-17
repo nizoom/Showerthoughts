@@ -7,7 +7,7 @@ import "firebase/firestore";
 
 //import { sign } from "cookie-signature";
 
-import { useAuth } from "../../../contexts/authcontext";
+import { useAuth, currentUser } from "../../../contexts/authcontext";
 
 import GoogleLogin from "./loginfuncs/existinguserloginfuncs.js"
 
@@ -60,22 +60,29 @@ const LoginUI = (props) => {
     const passwordRef = useRef();
     const passwordConfirmRef = useRef()
 
-    const { signUp } = useAuth()
+    const { signup, currentUser } = useAuth()
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
     async function handleNewUserSubmit(e) {
         e.preventDefault()
 
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+            console.log("Password dont match")
+
             return setError("Passwords do not match")
         }
 
         try {
-            setError('')
-            await signUp(emailRef.current.value, passwordRef.current.value)
+            setError('') //reset error state
+            setLoading(true)
+            await signup(emailRef.current.value, passwordRef.current.value)
         } catch {
+            console.log("Failed to create an account")
             setError("Failed to create an account")
         }
+        setLoading(false)
+
 
     }
 
@@ -113,10 +120,12 @@ const LoginUI = (props) => {
                 </div>
 
             </form> :
-                <form>
+                <form onSubmit={handleNewUserSubmit}>
+                    {/* {error.length > 1 ? alert(error) : null} */}
+                    {currentUser && currentUser.email}
                     <h2> Create an Account! </h2>
                     <div className="email-addy-field">
-                        <label htmlFor="email-addy"> Password: </label>
+                        <label htmlFor="email-addy"> Email: </label>
                         <input type="email" name="email-addy" id="email-addy" ref={emailRef} />
                     </div>
                     <div className="username-field">
@@ -133,7 +142,7 @@ const LoginUI = (props) => {
                         <input type="password" name="password-cnfrm" id="password-cnfrm" ref={passwordConfirmRef} />
                     </div>
                     <div className="submit-login-div">
-                        <button type="submit" className="submit-login-btn"> Submit </button>
+                        <button type="submit" className="submit-login-btn" disabled={loading}> Submit </button>
                     </div>
 
 
