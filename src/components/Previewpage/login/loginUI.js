@@ -7,7 +7,7 @@ import "firebase/firestore";
 
 //import { sign } from "cookie-signature";
 
-import { useAuth, currentUser } from "../../../contexts/authcontext";
+import { useAuth } from "../../../contexts/authcontext";
 
 import GoogleLogin from "./loginfuncs/existinguserloginfuncs";
 import Header from "../../header/header";
@@ -62,12 +62,17 @@ const LoginUI = (props) => {
         setSignedIn(true)
     }
 
+    //LOGIN REFS
+    const emailLoginRef = useRef();
+    const passWordLoginRef = useRef();
+
+    //SIGN UP REFS
     const emailRef = useRef();
     const userNameRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef()
 
-    const { signup, currentUser } = useAuth()
+    const { signup, currentUser, login } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
@@ -93,6 +98,19 @@ const LoginUI = (props) => {
 
     }
 
+    async function handleSignIn(e) {
+        e.preventDefault()
+        try {
+            setError('') //reset error state
+            setLoading(true)
+            await login(emailLoginRef.current.value, passWordLoginRef.current.value)
+        } catch {
+            console.log("Failed to sign in")
+            setError("failed to sign in")
+        }
+        setLoading(false)
+    }
+
     return (
         <div>
             <Header />
@@ -100,15 +118,17 @@ const LoginUI = (props) => {
                 {!newAccount ? <form className="login-box">
                     <h2> Login </h2>
                     <div className="username-field">
-                        <label htmlFor="username"> Username: </label>
-                        <input type="text" name="username" id="username" />
+                        <label htmlFor="username"> Email: </label>
+                        <input type="email" name="email" id="email" ref={emailLoginRef} />
                     </div >
                     <div className="password-field">
                         <label htmlFor="password"> Password: </label>
-                        <input type="password" name="password" id="password" />
+                        <input type="password" name="password" id="password" ref={passWordLoginRef} />
                     </div>
                     <div className="submit-login-div">
-                        <button type="submit" className="submit-login-btn"> Submit </button>
+                        <button type="submit" className="submit-login-btn"
+                            onClick={handleSignIn}
+                        > Submit </button>
                     </div>
                     <div className="create-account-instructions">
 
