@@ -7,17 +7,17 @@ import LoginUI from "./login/loginUI";
 
 const LandingPage = (props) => {
 
-    const [activeUI, setActiveUI] = useState(false)
+    // const [activeUI, setActiveUI] = useState(false)
 
-    function RevealLoginUI(e) {
-        setActiveUI(true)
-    }
+    // function RevealLoginUI(e) {
+    //     setActiveUI(true)
+    // }
 
     return (
         <div className="preview-layout">
             <header className="header-layout">
                 <Header className="title-component" />
-                <LoginBtn className="loginBtn-component" returnUIActivation={RevealLoginUI} />
+                <LoginBtn className="loginBtn-component" />
             </header>
             {/* {activeUI ? <LoginUI /> : null} */}
         </div>
