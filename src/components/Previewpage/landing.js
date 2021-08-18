@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../header/header";
 import LoginBtn from "./login/loginbtn";
 
 import "./landing.css"
-import LoginUI from "./login/loginUI";
+
 
 const LandingPage = (props) => {
 

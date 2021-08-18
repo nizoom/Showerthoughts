@@ -1,0 +1,17 @@
+.header-wrapper{
+    display: flex;
+    justify-content: space-between;
+   
+}
+
+.dashboard-wrapper{
+    text-align: center;
+    display: flex;
+    color: white;
+    flex-direction: column;
+   
+}
+
+section > h3{
+    cursor: pointer;
+}

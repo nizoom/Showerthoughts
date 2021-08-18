@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import "./loginUI.css"
 
 import firebase from "firebase";
@@ -11,7 +12,6 @@ import { useAuth } from "../../../contexts/authcontext";
 
 import GoogleLogin from "./loginfuncs/existinguserloginfuncs";
 import Header from "../../header/header";
-
 
 
 
@@ -30,9 +30,12 @@ const LoginUI = (props) => {
         activateNewAccount(false)
     }
 
-    const [signIn, setSignedIn] = useState(false);
+    // const [signIn, setSignedIn] = useState(false);
 
-    const [user, setUser] = useState({})
+    // const [user, setUser] = useState({})
+
+    const history = useHistory()
+
 
 
     async function googleAuth(e) {
@@ -43,8 +46,9 @@ const LoginUI = (props) => {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid;
                 console.log(user)
-                pushUser(user)
+                // pushUser(user)
                 // ...
+                history.push("/dashboard")
             } else {
                 // User is signed out
                 // ...
@@ -56,11 +60,11 @@ const LoginUI = (props) => {
 
     }
     //updates hooks to track user login
-    function pushUser(user) {
-        console.log("user is set")
-        setUser(user)
-        setSignedIn(true)
-    }
+    // function pushUser(user) {
+    //     console.log("user is set")
+    //     setUser(user)
+    //     setSignedIn(true)
+    // }
 
     //LOGIN REFS
     const emailLoginRef = useRef();
@@ -104,17 +108,21 @@ const LoginUI = (props) => {
             setError('') //reset error state
             setLoading(true)
             await login(emailLoginRef.current.value, passWordLoginRef.current.value)
+            setLoading(false)
+            history.push("/dashboard")
         } catch {
             console.log("Failed to sign in")
             setError("failed to sign in")
+            setLoading(false)
         }
-        setLoading(false)
+        // setLoading(false)
     }
 
     return (
         <div>
             <Header />
             <div >
+                {/* SIGN IN FORM */}
                 {!newAccount ? <form className="login-box">
                     <h2> Login </h2>
                     <div className="username-field">
@@ -149,6 +157,7 @@ const LoginUI = (props) => {
                     </div>
 
                 </form> :
+                    // SIGN UP FORM
                     <form onSubmit={handleNewUserSubmit} className="create-account-box">
                         {/* {error.length > 1 ? alert(error) : null} */}
                         {currentUser && currentUser.email}

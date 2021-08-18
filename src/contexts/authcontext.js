@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
             .then((userCredential) => {
                 // Signed in
                 var user = userCredential.user;
-                console.log(user)
+                //console.log(user)
                 return user
                 // ...
             })
@@ -38,14 +38,40 @@ export function AuthProvider({ children }) {
     }
 
     function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                //console.log(user)
+                return user
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorMessage)
+            });
+    }
+
+    function logout() {
+        return auth.signOut();
     }
 
     useEffect(() => {
+        // let unmounted = false;
+
+        // if (!unmounted) {
         const unsubscribe = auth.onAuthStateChanged(user => {
+            console.log(user)
             setCurrentUser(user)
             setLoading(false)
         })
+        // }
+
+
+        // return () => {
+        //     unmounted = true;
+        // }
 
         return unsubscribe
     }, [])
@@ -55,7 +81,8 @@ export function AuthProvider({ children }) {
     const value = {
         currentUser,
         signup,
-        login
+        login,
+        logout
     }
 
 
