@@ -5,6 +5,7 @@ import Dashboard from './components/dashboard/dashboard';
 import { AuthProvider } from './contexts/authcontext';
 import LoginUI from './components/Previewpage/login/loginUI';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import PrivateRoute from './components/privateroutes/privateroute';
 
 function App() {
   return (
@@ -12,9 +13,9 @@ function App() {
       <Router>
         <AuthProvider>
           <Switch>
-            <Route exact path="/" component={LandingPage} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <Route path="/login" component={LoginUI} />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/" component={LandingPage} />
 
           </Switch>
 
