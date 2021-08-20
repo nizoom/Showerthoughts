@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
+import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
+import { passwordConfirmation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 
 
 const AuthContext = React.createContext();
@@ -17,27 +19,43 @@ export function AuthProvider({ children }) {
 
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState();
 
-    function signup(email, password) {
+    function signup(email, password, pwdCnfm) {
+        setError(null)
         console.log('yo we signed up')
+        let cnfmed = passwordConfirmation(password, pwdCnfm)
 
-        return auth.createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                //console.log(user)
-                return user
-                // ...
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorMessage)
-            });
+        //if this case doesn't come up then delete the below if statement 
+        if (typeof cnfmed === "string") {
+            setError("Your password must be at least 6 characters")
+        }
+        //
+        if (cnfmed) {
+            return auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    //console.log(user)
+                    return user
+                    // ...
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.log("error message from failed acct creation")
+                    console.log(errorMessage)
+                    setError(errorMessage)
+                });
+        } if (!cnfmed) {
+            setError("Passwords do not match")
+        }
+
 
     }
 
     function login(email, password) {
+        setError(null)
         auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 // Signed in
@@ -47,9 +65,12 @@ export function AuthProvider({ children }) {
                 // ...
             })
             .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorMessage)
+                const errorCode = error.code;
+                // var errorMessage = error.message;
+                console.log(errorCode)
+                //console.log(errorMessage)
+                let errorMessage = loginValidation(errorCode)
+                setError(errorMessage)
             });
     }
 
@@ -58,21 +79,13 @@ export function AuthProvider({ children }) {
     }
 
     useEffect(() => {
-        // let unmounted = false;
 
-        // if (!unmounted) {
         const unsubscribe = auth.onAuthStateChanged(user => {
             console.log(user)
             setCurrentUser(user)
             setLoading(false)
+
         })
-        // }
-
-
-        // return () => {
-        //     unmounted = true;
-        // }
-
         return unsubscribe
     }, [])
 
@@ -82,7 +95,8 @@ export function AuthProvider({ children }) {
         currentUser,
         signup,
         login,
-        logout
+        logout,
+        error
     }
 
 

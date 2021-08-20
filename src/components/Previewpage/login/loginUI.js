@@ -1,12 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./loginUI.css"
 
 import firebase from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
-
-//import { sign } from "cookie-signature";
 
 import { useAuth } from "../../../contexts/authcontext";
 
@@ -15,19 +13,23 @@ import Header from "../../header/header";
 
 
 
-
-const LoginUI = (props) => {
-
-    console.log("UI APPEAR")
+const LoginUI = () => {
 
     const [newAccount, activateNewAccount] = useState(false);
 
+
     function activateSignup() {
         activateNewAccount(true)
+        // so that the err wouldn't show when the user moves btw login and sign up pages
+        setShowError(false)
     }
 
     function goBackToLogin() {
-        activateNewAccount(false)
+        if (error !== null) {
+            activateNewAccount(false)
+            setShowError(false)
+        }
+
     }
 
     // const [signIn, setSignedIn] = useState(false);
@@ -35,6 +37,7 @@ const LoginUI = (props) => {
     // const [user, setUser] = useState({})
 
     const history = useHistory()
+
 
 
 
@@ -54,17 +57,8 @@ const LoginUI = (props) => {
                 // ...
             }
         });
-
-
-
-
     }
-    //updates hooks to track user login
-    // function pushUser(user) {
-    //     console.log("user is set")
-    //     setUser(user)
-    //     setSignedIn(true)
-    // }
+
 
     //LOGIN REFS
     const emailLoginRef = useRef();
@@ -76,29 +70,30 @@ const LoginUI = (props) => {
     const passwordRef = useRef();
     const passwordConfirmRef = useRef()
 
-    const { signup, currentUser, login } = useAuth()
-    const [error, setError] = useState("")
+    const { signup, login, error, currentUser } = useAuth()
+    const [err, setError] = useState("") //maybe delete this state hook
+    const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
 
     async function handleNewUserSubmit(e) {
         e.preventDefault()
 
-        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-            console.log("Password dont match")
-
-            return setError("Passwords do not match")
-        }
-
         try {
-            setError('') //reset error state
+
             setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
+            await signup(emailRef.current.value, passwordRef.current.value, passwordConfirmRef.current.value)
+            console.log(error)
+            if (error === null) {
+
+                activateNewAccount(false)
+            }
         } catch {
             console.log("Failed to create an account")
             setError("Failed to create an account")
         }
         setLoading(false)
 
+        setShowError(true) //if there is an error then show it 
 
     }
 
@@ -107,23 +102,42 @@ const LoginUI = (props) => {
         try {
             setError('') //reset error state
             setLoading(true)
+            // const result = 
             await login(emailLoginRef.current.value, passWordLoginRef.current.value)
-            setLoading(false)
-            history.push("/dashboard")
+            // const goToDashBoard = currentUser !== null ? history.push("/dashboard") : null;
+
+
+
         } catch {
+            //maybe add that console log message to validation function.
             console.log("Failed to sign in")
-            setError("failed to sign in")
+
+
+            // setError(error)
             setLoading(false)
         }
+        setShowError(true)
         // setLoading(false)
     }
 
+    useEffect(() => {
+        console.log("firing")
+        if (currentUser !== null) {
+            console.log('going to dashboard')
+            history.push("/dashboard")
+        }
+
+    }, [currentUser])
+
+    // console.log(currentUser)
     return (
         <div>
             <Header />
             <div >
                 {/* SIGN IN FORM */}
+
                 {!newAccount ? <form className="login-box">
+                    {error !== null && showError ? <h1> {error} </h1> : null}
                     <h2> Login </h2>
                     <div className="username-field">
                         <label htmlFor="username"> Email: </label>
@@ -159,8 +173,8 @@ const LoginUI = (props) => {
                 </form> :
                     // SIGN UP FORM
                     <form onSubmit={handleNewUserSubmit} className="create-account-box">
-                        {/* {error.length > 1 ? alert(error) : null} */}
-                        {currentUser && currentUser.email}
+                        {error !== null && showError ? <h1>{error} </h1> : null}
+                        {/* {currentUser && currentUser.email} */}
                         <h2> Create an Account! </h2>
                         <div className="email-addy-field">
                             <label htmlFor="email-addy"> Email: </label>
@@ -180,7 +194,9 @@ const LoginUI = (props) => {
                             <input type="password" name="password-cnfrm" id="password-cnfrm" ref={passwordConfirmRef} />
                         </div>
                         <div className="submit-login-div">
-                            <button type="submit" className="submit-login-btn" disabled={loading}> Sign up </button>
+                            <button type="submit" className="submit-login-btn" disabled={loading}
+
+                            > Sign up </button>
                         </div>
                         <div className="submit-login-div">
                             <button type="submit" className="submit-login-btn" disabled={loading}
