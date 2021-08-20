@@ -15,3 +15,15 @@
 section > h3{
     cursor: pointer;
 }
+
+.feed-wrapper{
+    border: white 2px solid;
+    height: 100%;
+    width: 90%;
+    margin: auto;
+}
+
+.feed-list > li{
+    
+    margin: 40px;
+}
