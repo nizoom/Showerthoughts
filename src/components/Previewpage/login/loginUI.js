@@ -16,28 +16,19 @@ import Header from "../../header/header";
 const LoginUI = () => {
 
     const [newAccount, activateNewAccount] = useState(false);
+    //newAccount true means show signup page 
 
 
     function activateSignup() {
         activateNewAccount(true)
-        // so that the err wouldn't show when the user moves btw login and sign up pages
         setShowError(false)
     }
 
     function goBackToLogin() {
-        if (error !== null) {
-            activateNewAccount(false)
-            setShowError(false)
-        }
+        activateNewAccount(false)
+        setShowError(false)
 
     }
-
-    // const [signIn, setSignedIn] = useState(false);
-
-    // const [user, setUser] = useState({})
-
-    const history = useHistory()
-
 
 
 
@@ -49,9 +40,7 @@ const LoginUI = () => {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid;
                 console.log(user)
-                // pushUser(user)
-                // ...
-                history.push("/dashboard")
+
             } else {
                 // User is signed out
                 // ...
@@ -71,7 +60,7 @@ const LoginUI = () => {
     const passwordConfirmRef = useRef()
 
     const { signup, login, error, currentUser } = useAuth()
-    const [err, setError] = useState("") //maybe delete this state hook
+    // const [err, setError] = useState("") //maybe delete this state hook
     const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -83,13 +72,12 @@ const LoginUI = () => {
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value, passwordConfirmRef.current.value)
             console.log(error)
-            if (error === null) {
-
-                activateNewAccount(false)
+            if (error === null) { //if no error
+                goBackToLogin()
             }
         } catch {
             console.log("Failed to create an account")
-            setError("Failed to create an account")
+            //setError("Failed to create an account")
         }
         setLoading(false)
 
@@ -100,13 +88,10 @@ const LoginUI = () => {
     async function handleSignIn(e) {
         e.preventDefault()
         try {
-            setError('') //reset error state
+            //setError('') //reset error state
             setLoading(true)
-            // const result = 
+
             await login(emailLoginRef.current.value, passWordLoginRef.current.value)
-            // const goToDashBoard = currentUser !== null ? history.push("/dashboard") : null;
-
-
 
         } catch {
             //maybe add that console log message to validation function.
@@ -117,8 +102,10 @@ const LoginUI = () => {
             setLoading(false)
         }
         setShowError(true)
-        // setLoading(false)
+        setLoading(false)
     }
+
+    const history = useHistory()
 
     useEffect(() => {
         console.log("firing")
@@ -129,7 +116,6 @@ const LoginUI = () => {
 
     }, [currentUser])
 
-    // console.log(currentUser)
     return (
         <div>
             <Header />

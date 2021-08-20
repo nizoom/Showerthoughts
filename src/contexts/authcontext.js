@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
     const [error, setError] = useState();
 
     function signup(email, password, pwdCnfm) {
-        setError(null)
+
         console.log('yo we signed up')
         let cnfmed = passwordConfirmation(password, pwdCnfm)
 
