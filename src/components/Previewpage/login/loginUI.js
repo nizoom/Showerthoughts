@@ -64,13 +64,17 @@ const LoginUI = () => {
     const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
 
+
+
+
     async function handleNewUserSubmit(e) {
         e.preventDefault()
 
         try {
 
             setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value, passwordConfirmRef.current.value)
+            await signup(emailRef.current.value,
+                passwordRef.current.value, passwordConfirmRef.current.value, userNameRef.current.value)
             console.log(error)
             if (error === null) { //if no error
                 goBackToLogin()

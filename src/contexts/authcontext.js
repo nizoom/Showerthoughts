@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { passwordConfirmation } from "../components/Previewpage/login/loginfuncs/validatelogin";
+import { setUsername } from "../components/setuserdata/setuserdata";
 
 
 const AuthContext = React.createContext();
@@ -21,7 +22,8 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState();
 
-    function signup(email, password, pwdCnfm) {
+
+    function signup(email, password, pwdCnfm, username) {
 
         console.log('yo we signed up')
         let cnfmed = passwordConfirmation(password, pwdCnfm)
@@ -30,7 +32,13 @@ export function AuthProvider({ children }) {
         if (typeof cnfmed === "string") {
             setError("Your password must be at least 6 characters")
         }
-        //
+        //username validation 
+        if (cnfmed && username !== "") { //might want to add more validation rules
+            setUsername(username, email, password)
+        } else {
+            setError("Please enter a username")
+        }
+
         if (cnfmed) {
             return auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
