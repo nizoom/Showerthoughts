@@ -4,11 +4,15 @@ import LoginBtn from "../Previewpage/login/loginbtn"
 import "./dashboard.css"
 import { useAuth } from "../../contexts/authcontext";
 import NavMenu from "../navmenu/nav"
+import { getUserInfo } from "../getuserdata/getuserdata";
 
 const Dashboard = (props) => {
 
     const { currentUser } = useAuth();
     //console.log(currentUser)
+    //getUserInfo(currentUser.email);
+
+
     return (
         <div>
             <div className="header-wrapper">

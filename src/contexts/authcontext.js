@@ -23,6 +23,7 @@ export function AuthProvider({ children }) {
     const [error, setError] = useState();
 
 
+
     function signup(email, password, pwdCnfm, username) {
 
         console.log('yo we signed up')
@@ -33,6 +34,8 @@ export function AuthProvider({ children }) {
             setError("Your password must be at least 6 characters")
         }
         //username validation 
+        console.log("validating username")
+        console.log(username)
         if (cnfmed && username !== "") { //might want to add more validation rules
             setUsername(username, email, password)
         } else {
