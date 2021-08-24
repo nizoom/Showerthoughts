@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn"
 import "./dashboard.css"
@@ -6,11 +6,19 @@ import { useAuth } from "../../contexts/authcontext";
 import NavMenu from "../navmenu/nav"
 import { getUserInfo } from "../getuserdata/getuserdata";
 
-const Dashboard = (props) => {
+const Dashboard = () => {
 
-    const { currentUser } = useAuth();
-    //console.log(currentUser)
-    //getUserInfo(currentUser.email);
+    const { currentUser, username } = useAuth();
+    const [account, setAccount] = useState("")
+
+
+    useEffect(() => {
+
+        const accountFound = getUserInfo(currentUser.email);
+        console.log(accountFound)
+        setAccount(accountFound)
+
+    }, [username])
 
 
     return (
@@ -23,7 +31,7 @@ const Dashboard = (props) => {
             <div className="dashboard-wrapper">
 
                 <h2> <em> Email: </em> {currentUser.email}</h2>
-                <h2> username :{currentUser.displayName}</h2>
+                <h2> username :{account}</h2>
                 <h2> Shower-induced thoughts near you: </h2>
 
                 <section className="feed-wrapper">

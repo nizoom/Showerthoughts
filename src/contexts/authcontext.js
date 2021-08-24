@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { passwordConfirmation } from "../components/Previewpage/login/loginfuncs/validatelogin";
-import { setUsername } from "../components/setuserdata/setuserdata";
+import { postUsername } from "../components/setuserdata/postuserdata";
+import { getUserInfo } from "../components/getuserdata/getuserdata";
 
 
 const AuthContext = React.createContext();
@@ -21,6 +22,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState();
+    const [username, setUsername] = useState();
 
 
 
@@ -37,7 +39,8 @@ export function AuthProvider({ children }) {
         console.log("validating username")
         console.log(username)
         if (cnfmed && username !== "") { //might want to add more validation rules
-            setUsername(username, email, password)
+            postUsername(username, email, password)
+            setUsername(username)
         } else {
             setError("Please enter a username")
         }
@@ -83,6 +86,10 @@ export function AuthProvider({ children }) {
                 let errorMessage = loginValidation(errorCode)
                 setError(errorMessage)
             });
+        //get username from db 
+        //iterate through username.email till there is a match
+
+
     }
 
     function logout() {
@@ -96,6 +103,7 @@ export function AuthProvider({ children }) {
             setCurrentUser(user)
             setLoading(false)
 
+
         })
         return unsubscribe
     }, [])
@@ -103,6 +111,7 @@ export function AuthProvider({ children }) {
 
 
     const value = {
+        username,
         currentUser,
         signup,
         login,

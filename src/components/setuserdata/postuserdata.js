@@ -2,7 +2,7 @@ import firebase from "firebase";
 
 const database = firebase.database()
 
-export function setUsername(username, email, password) {
+export function postUsername(username, email, password) {
     try {
         database.ref('users/' + username).set({
             email: email,
