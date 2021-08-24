@@ -4,14 +4,14 @@ import firebase from "firebase";
 const db = firebase.database()
 
 
-export function getUserInfo(neededAccountEmail) {
+export function getUserInfo(neededAccountEmail, callback) {
     console.log("fired")
     //get username from db 
     //iterate through account email till there is a match with the newly logged in person
     //return that account to be displayed in the dashboard
 
     const usersRef = db.ref("users")
-    let accnt = []
+
     usersRef.on('value', (snapshot) => {
         const users = snapshot.val();
         const dataToArr = Object.entries(users)
@@ -25,18 +25,20 @@ export function getUserInfo(neededAccountEmail) {
         })
 
         const accountFound = dataToArr[index]
+
+        callback(accountFound)
         //console.log(accountFound)
         //accnt.push(accountFound)
 
 
 
     })
-    console.log(accnt)
     //return accnt
     //return dataToArr of found index
 
 
 }
+
 
 
     //return whole userobject and we can parse as needed

@@ -14,9 +14,16 @@ const Dashboard = () => {
 
     useEffect(() => {
 
-        const accountFound = getUserInfo(currentUser.email);
-        console.log(accountFound)
-        setAccount(accountFound)
+        getUserInfo(currentUser.email, callback)
+
+        function callback(foundAccount) {
+            console.log(foundAccount)
+            setAccount(foundAccount[1])
+        }
+
+
+        // console.log(accountFound)
+        // setAccount(accountFound)
 
     }, [username])
 
@@ -31,7 +38,7 @@ const Dashboard = () => {
             <div className="dashboard-wrapper">
 
                 <h2> <em> Email: </em> {currentUser.email}</h2>
-                <h2> username :{account}</h2>
+                <h2> username :{account.username}</h2>
                 <h2> Shower-induced thoughts near you: </h2>
 
                 <section className="feed-wrapper">
