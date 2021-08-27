@@ -1,0 +1,15 @@
+.post-form-wrapper{
+    width: 50%;
+    margin: auto;
+    border: 2px solid white;
+    color: white;
+    text-align: center;
+}
+
+.textarea-field{
+    margin: 10%;
+}
+
+.subject-field{
+    margin: 10%;
+}

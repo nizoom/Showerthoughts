@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { passwordConfirmation } from "../components/Previewpage/login/loginfuncs/validatelogin";
-import { postUsername } from "../components/setuserdata/postuserdata";
+import { postUsername } from "../components/postuserdata/postuserdata";
 import { getUserInfo } from "../components/getuserdata/getuserdata";
 
 

@@ -16,3 +16,11 @@ export function postUsername(username, email, password) {
     }
 
 }
+
+export function postNewThought(subject, body, user) {
+    try {
+        database.ref()
+    } catch (error) {
+        console.log(error)
+    }
+}

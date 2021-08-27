@@ -1,6 +1,7 @@
 
 body {
- 
+ height: 100vh;
   background-color: #282c34;
 }
 
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
