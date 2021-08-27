@@ -28,14 +28,9 @@ const NavMenu = (props) => {
                             Feed
                         </button>
 
-
-
-                        {/* <Link to="/profile"> */}
                         <button onClick={profileClick}>
                             Profile
                         </button>
-                        {/* </Link> */}
-
 
                         <button>
                             New Showerthought

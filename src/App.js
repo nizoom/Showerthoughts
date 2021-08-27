@@ -19,7 +19,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginUI} />
-            <Route path="/profile" component={ProfilePage} />
+            <PrivateRoute exact path="/profile" component={ProfilePage} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
           </Switch>

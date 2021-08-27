@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState();
+    const [userInfo, setUserInfo] = useState();
 
 
 
@@ -97,6 +98,13 @@ export function AuthProvider({ children }) {
         return auth.signOut();
     }
 
+    function storeUserInfo(userInfoz) {
+        console.log(userInfoz)
+        console.log("storing user info")
+        setUserInfo(userInfoz)
+
+    }
+
     useEffect(() => {
 
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -116,7 +124,9 @@ export function AuthProvider({ children }) {
         signup,
         login,
         logout,
-        error
+        error,
+        storeUserInfo,
+        userInfo
     }
 
 

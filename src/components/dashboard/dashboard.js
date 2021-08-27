@@ -8,7 +8,7 @@ import { getUserInfo } from "../getuserdata/getuserdata";
 
 const Dashboard = () => {
 
-    const { currentUser, username } = useAuth();
+    const { currentUser, username, storeUserInfo } = useAuth();
     const [account, setAccount] = useState("")
 
 
@@ -19,7 +19,9 @@ const Dashboard = () => {
         function callback(foundAccount) {
             console.log(foundAccount)
             setAccount(foundAccount[1])
+            storeUserInfo(foundAccount)
         }
+
 
 
         // console.log(accountFound)
