@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { BrowserRouter as Link } from "react-router-dom";
 import "./nav.css"
 import { auth } from "../../firebase/firebase";
 
@@ -24,7 +25,8 @@ const NavMenu = (props) => {
                         </button>
 
                         <button>
-                            Profile
+                            <Link to="/profile"> Profile</Link>
+
                         </button>
 
                         <button>

@@ -34,7 +34,7 @@ const Dashboard = () => {
                 <Header />
                 <LoginBtn />
             </div>
-            <NavMenu />
+            <NavMenu account={account} />
             <div className="dashboard-wrapper">
                 <p> <em>  Dashboard Page </em></p>
                 <h2> <em> Email: </em> {currentUser.email}</h2>
