@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState();
-    const [username, setUsername] = useState();
+
 
 
 
@@ -38,11 +38,12 @@ export function AuthProvider({ children }) {
         //username validation 
         console.log("validating username")
         console.log(username)
-        if (cnfmed && username !== "") { //might want to add more validation rules
+        if (cnfmed && username.length > 3) { //might want to add more validation rules
             postUsername(username, email, password)
-            setUsername(username)
         } else {
-            setError("Please enter a username")
+            console.log("ERROR")
+            setError("Please enter a username") // this is not enough
+            return
         }
 
         if (cnfmed) {
@@ -111,7 +112,6 @@ export function AuthProvider({ children }) {
 
 
     const value = {
-        username,
         currentUser,
         signup,
         login,
