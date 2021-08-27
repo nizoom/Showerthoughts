@@ -4,6 +4,7 @@ import LandingPage from './components/Previewpage/landing';
 import Dashboard from './components/dashboard/dashboard';
 import LoginUI from './components/Previewpage/login/loginUI';
 import ProfilePage from './components/profile/profile';
+import NewPostPage from './components/newpost/newpost';
 
 
 import { AuthProvider } from './contexts/authcontext';
@@ -19,8 +20,12 @@ function App() {
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginUI} />
-            <PrivateRoute exact path="/profile" component={ProfilePage} />
+
+
+
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/profile" component={ProfilePage} />
+            <PrivateRoute exact path="/newpost" component={NewPostPage} />
 
           </Switch>
 

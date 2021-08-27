@@ -18,14 +18,12 @@ const Dashboard = () => {
 
         function callback(foundAccount) {
             console.log(foundAccount)
+            //set for display on dashboard
             setAccount(foundAccount[1])
+            //store in auth context for other components to use 
             storeUserInfo(foundAccount)
         }
 
-
-
-        // console.log(accountFound)
-        // setAccount(accountFound)
 
     }, [username])
 
@@ -62,7 +60,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-
-{/* <h3> Posts </h3>
-                    <h3> Feed </h3>
-                    <h3> New Showerthought</h3> */}

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { BrowserRouter as Link, useHistory } from "react-router-dom";
 import "./nav.css"
-import { auth } from "../../firebase/firebase";
+// import { auth } from "../../firebase/firebase";
 
 const NavMenu = (props) => {
 
@@ -12,8 +12,8 @@ const NavMenu = (props) => {
     }
     const history = useHistory();
 
-    function profileClick() {
-        history.push("./profile")
+    function pageClick(pageName) {
+        history.push(`./${pageName}`)
     }
 
     return (
@@ -28,11 +28,11 @@ const NavMenu = (props) => {
                             Feed
                         </button>
 
-                        <button onClick={profileClick}>
+                        <button onClick={() => pageClick("profile")}>
                             Profile
                         </button>
 
-                        <button>
+                        <button onClick={() => pageClick("newpost")}>
                             New Showerthought
                         </button>
 
