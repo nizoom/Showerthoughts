@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./profile.css"
 import { useAuth } from "../../contexts/authcontext";
+import Header from "../header/header";
 
 
 const ProfilePage = (props) => {
@@ -10,6 +11,7 @@ const ProfilePage = (props) => {
     })
     return (
         <div>
+            <Header />
             <h1> Profile Page </h1>
 
         </div>
