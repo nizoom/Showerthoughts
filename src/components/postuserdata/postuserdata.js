@@ -17,10 +17,13 @@ export function postUsername(username, email, password) {
 
 }
 
-export function postNewThought(subject, body, user) {
+export function postNewThought(subject, body, username) {
     try {
-        database.ref()
+        database.ref('users/' + username).set({
+
+        })
     } catch (error) {
+        console.log('failed to add post')
         console.log(error)
     }
 }

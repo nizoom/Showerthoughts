@@ -27,7 +27,7 @@
     transition: 1000ms ease-in;
     text-align: center;
     background-image: linear-gradient(to right, #58D68D, #648DD1);
-    width: 50%;
+    width: 100%;
     border-radius:0 2em 2em 0;
     height: 100px;
     margin-top: 3em;

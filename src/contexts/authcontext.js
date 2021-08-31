@@ -3,7 +3,9 @@ import { auth } from "../firebase/firebase";
 import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { passwordConfirmation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { postUsername } from "../components/postuserdata/postuserdata";
-import { getUserInfo } from "../components/getuserdata/getuserdata";
+// import { getUserInfo } from "../components/getuserdata/getuserdata";
+
+// import { getUserInfo } from "../components/getuserdata/getuserdata";
 
 
 const AuthContext = React.createContext();
@@ -98,12 +100,7 @@ export function AuthProvider({ children }) {
         return auth.signOut();
     }
 
-    function storeUserInfo(userInfoz) {
-        console.log(userInfoz)
-        console.log("storing user info")
-        setUserInfo(userInfoz)
 
-    }
 
     useEffect(() => {
 
@@ -114,10 +111,21 @@ export function AuthProvider({ children }) {
 
 
         })
+
         return unsubscribe
-    }, [])
+    }, [userInfo])
+
+    // const [value, setValue] = useState({
+
+    // })
+    function storeUserInfo(userInfoz) {
+
+        console.log(userInfoz)
+        console.log("storing user info")
+        setUserInfo(userInfoz)
 
 
+    }
 
     const value = {
         currentUser,

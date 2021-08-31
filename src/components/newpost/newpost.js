@@ -1,22 +1,45 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { useAuth } from "../../contexts/authcontext";
+import { postNewThought } from "../postuserdata/postuserdata";
+
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn";
 import NavMenu from "../navmenu/nav";
 import "./newpost.css";
 
+
 const NewPostPage = (props) => {
 
-    const headerThoughtRef = useRef();
+    const { userInfo } = useAuth();
+
+    console.log(useAuth())
+
+    //const [userState, setUserState] = useState()
+
+    const subjectThoughtRef = useRef();
 
     const textThoughtRef = useRef();
+
+
+
+    // useEffect(() => {
+    //     console.log(userInfo)
+    //     setUserState(userInfo)
+    // })
+
+    //get username from authcontext
+
 
     function handleNewPostSubmit(e) {
         e.preventDefault();
         //require text in forms 
 
         // post submission to the db for that user 
-        console.log(headerThoughtRef.current.value)
-        console.log(textThoughtRef.current.value)
+        const subject = subjectThoughtRef.current.value
+        const body = textThoughtRef.current.value
+        // console.log(headerThoughtRef.current.value)
+        // console.log(textThoughtRef.current.value)
+        postNewThought(subject, body, userInfo)
     }
 
     return (
@@ -29,10 +52,10 @@ const NewPostPage = (props) => {
             <NavMenu />
             <div className="post-form-wrapper">
                 <form onSubmit={handleNewPostSubmit}>
-                    <h2> <b> <u> New Post </u></b> </h2>
+                    <h2> <b> <u> New Post from {userInfo[1].username} </u></b> </h2>
                     <div className="subject-field">
                         <label htmlFor="subject"> Subject: </label>
-                        <input type="text" name="text-thought" id="text-thought" ref={headerThoughtRef} />
+                        <input type="text" name="text-thought" id="text-thought" ref={subjectThoughtRef} />
                     </div>
                     <div className="textarea-field">
                         <textarea className="textarea is-primary" placeholder="I was thinking..." maxLength="500"
@@ -53,7 +76,4 @@ const NewPostPage = (props) => {
 
 export default NewPostPage;
 
-{/* <div className="username-field">
-<label htmlFor="username"> Email: </label>
-<input type="email" name="email" id="email" ref={emailLoginRef} />
-</div > */}
+// from {userState[0]
