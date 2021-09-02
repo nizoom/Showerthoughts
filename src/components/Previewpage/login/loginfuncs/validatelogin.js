@@ -1,4 +1,14 @@
 
+// get, set, get new str -> full update cycle
+export function testFunction(str) {
+    console.log(`The string: ${str} is being updated`)
+    let newString = "Updated string is donda"
+    return newString
+    // callback(newString)
+}
+
+
+
 export function loginValidation(errCode) {
     switch (errCode) {
         case "auth/user-not-found":

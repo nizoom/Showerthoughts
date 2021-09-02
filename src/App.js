@@ -6,6 +6,8 @@ import LoginUI from './components/Previewpage/login/loginUI';
 import ProfilePage from './components/profile/profile';
 import NewPostPage from './components/newpost/newpost';
 
+import TestContext from './components/testcontext';
+
 
 import { AuthProvider } from './contexts/authcontext';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
@@ -20,6 +22,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginUI} />
+            <Route path="/test" component={TestContext} />
 
 
 

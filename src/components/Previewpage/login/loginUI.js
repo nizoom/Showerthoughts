@@ -6,6 +6,8 @@ import firebase from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
 
+
+
 import { useAuth } from "../../../contexts/authcontext";
 
 import GoogleLogin from "./loginfuncs/existinguserloginfuncs";
@@ -40,7 +42,7 @@ const LoginUI = () => {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid;
                 console.log(user)
-
+                history.push("/dashboard")
             } else {
                 // User is signed out
                 // ...
@@ -59,8 +61,7 @@ const LoginUI = () => {
     const passwordRef = useRef();
     const passwordConfirmRef = useRef()
 
-    const { signup, login, error, currentUser } = useAuth()
-    // const [err, setError] = useState("") //maybe delete this state hook
+    const { signup, login, error, setError, currentUser } = useAuth()
     const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -89,6 +90,9 @@ const LoginUI = () => {
 
     }
 
+    const history = useHistory()
+
+
     async function handleSignIn(e) {
         e.preventDefault()
         try {
@@ -96,29 +100,19 @@ const LoginUI = () => {
             setLoading(true)
 
             await login(emailLoginRef.current.value, passWordLoginRef.current.value)
+            history.push("/dashboard")
 
         } catch {
             //maybe add that console log message to validation function.
             console.log("Failed to sign in")
-
-
-            // setError(error)
+            setError(error)
             setLoading(false)
         }
-        setShowError(true)
-        setLoading(false)
+
     }
 
-    const history = useHistory()
 
-    useEffect(() => {
-        console.log("firing")
-        if (currentUser !== null) {
-            console.log('going to dashboard')
-            history.push("/dashboard")
-        }
 
-    }, [currentUser])
 
     return (
         <div>
@@ -204,3 +198,12 @@ const LoginUI = () => {
 }
 
 export default LoginUI;
+
+  // useEffect(() => {
+    //     console.log("firing")
+    //     if (currentUser !== null) {
+    //         console.log('going to dashboard')
+    //         history.push("/dashboard")
+    //     }
+
+    // }, [currentUser])

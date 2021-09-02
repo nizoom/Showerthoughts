@@ -26,8 +26,12 @@ export function getUserInfo(neededAccountEmail, callback) {
 
         const accountFound = dataToArr[index]
 
-        callback(accountFound)
-        //console.log(accountFound)
+        //callback(accountFound)
+
+
+
+        console.log(accountFound)
+        return accountFound
         //accnt.push(accountFound)
 
 

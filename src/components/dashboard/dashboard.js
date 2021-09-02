@@ -12,20 +12,20 @@ const Dashboard = () => {
     const [account, setAccount] = useState("")
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        getUserInfo(currentUser.email, callback)
+    //     getUserInfo(currentUser.email, callback)
 
-        function callback(foundAccount) {
-            console.log(foundAccount)
-            //set for display on dashboard
-            setAccount(foundAccount[1])
-            //store in auth context for other components to use 
-            storeUserInfo(foundAccount)
-        }
+    //     function callback(foundAccount) {
+    //         console.log(foundAccount)
+    //         //set for display on dashboard
+    //         setAccount(foundAccount[1])
+    //         //store in auth context for other components to use 
+    //         //storeUserInfo(foundAccount)
+    //     }
 
 
-    }, [username])
+    // }, [username])
 
 
     return (

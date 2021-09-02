@@ -26,7 +26,7 @@ const ProfilePage = (props) => {
                 <LoginBtn />
             </header>
             <NavMenu />
-            <h2 style={{ textAlign: "center", color: "white" }}> {userInfo[1].username}'s Profile Page </h2>
+            <h2 style={{ textAlign: "center", color: "white" }}> {userInfo}'s Profile Page </h2>
             <section>
                 <h3 style={{ textAlign: "center", color: "white" }}>See all previous posts: </h3>
             </section>

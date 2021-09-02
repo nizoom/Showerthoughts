@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import { auth } from "../firebase/firebase";
 import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { passwordConfirmation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { postUsername } from "../components/postuserdata/postuserdata";
-// import { getUserInfo } from "../components/getuserdata/getuserdata";
 
 // import { getUserInfo } from "../components/getuserdata/getuserdata";
 
@@ -24,7 +23,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState();
-    const [userInfo, setUserInfo] = useState();
+
 
 
 
@@ -73,23 +72,25 @@ export function AuthProvider({ children }) {
     }
 
     function login(email, password) {
+        console.log("attempting log in")
         setError(null)
-        auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                //console.log(user)
-                return user
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                // var errorMessage = error.message;
-                console.log(errorCode)
-                //console.log(errorMessage)
-                let errorMessage = loginValidation(errorCode)
-                setError(errorMessage)
-            });
+        return auth.signInWithEmailAndPassword(email, password)
+        // .then((userCredential) => {
+        //     // Signed in
+        //     var user = userCredential.user;
+        //     //console.log(user)
+        //     return user
+        //     // ...
+        // })
+        // .catch((error) => {
+        //     const errorCode = error.code;
+        //     // var errorMessage = error.message;
+        //     console.log(errorCode)
+        //     //console.log(errorMessage)
+        //     let errorMessage = loginValidation(errorCode)
+        //     setError(errorMessage)
+        //     return false
+        // });
         //get username from db 
         //iterate through username.email till there is a match
 
@@ -108,38 +109,73 @@ export function AuthProvider({ children }) {
             console.log(user)
             setCurrentUser(user)
             setLoading(false)
+            //establishUser()
+
 
 
         })
+        // call get user data here 
+        console.log(randomStr)
 
         return unsubscribe
-    }, [userInfo])
-
-    // const [value, setValue] = useState({
-
-    // })
-    function storeUserInfo(userInfoz) {
-
-        console.log(userInfoz)
-        console.log("storing user info")
-        setUserInfo(userInfoz)
+    }, []) // or userInfoHook
+    // async function establishUser() {
+    //     console.log("firing in auth")
+    //     const userInfo = await getUserInfo(currentUser.email)
+    //     console.log(userInfo)
+    //     setUserInfoHook(userInfo)
+    // }
 
 
-    }
+    // const userRef = React.useRef(null)
 
-    const value = {
-        currentUser,
-        signup,
-        login,
-        logout,
-        error,
-        storeUserInfo,
-        userInfo
-    }
+    // function storeUserInfo(userInfoz) {
 
+    //     console.log(userInfoz)
+    //     console.log("storing user info")
+
+    //     //setUserInfo(userInfoz)
+    //     userRef.current = userInfoz;
+
+    // }
+
+
+    // const value = {
+    //     currentUser,
+    //     signup,
+    //     login,
+    //     logout,
+    //     error,
+    //     //storeUserInfo,
+    //     userInfoHook
+    // }
+
+
+    // console.log(typeof value)
+    // setRandomStr("This is a test string ")
+    const [context, setContext] = useState(
+
+        // contextMethods: [currentUser,
+        //     signup,
+        //     login,
+        //     logout,
+        //     error,
+        //     randomStr,
+        //     setRandomStr]
+    )
+
+
+
+    const providerValue = useMemo(() => ({
+        context, setContext
+    }), [context, setContext])
+
+    const [randomStr, setRandomStr] = useState("Beginning");
+    //console.log(randomStr)
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={{ signup, login, error, setError, logout, currentUser }}>
+
             {!loading && children}
         </AuthContext.Provider>
     )
