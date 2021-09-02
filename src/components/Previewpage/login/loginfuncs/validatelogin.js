@@ -24,11 +24,10 @@ export function loginValidation(errCode) {
 }
 
 export function passwordConfirmation(pw, confirmpw) {
-    if (pw.length < 6 || confirmpw.length < 6) {
-        return "too short"
+    if (pw.length < 6) {
+        return "Entered password is too short"
     }
     if (pw !== confirmpw) {
-        // "Passwords don't match"
-        return false;
+        return "Passwords don't match";
     } return true;
 }

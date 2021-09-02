@@ -31,21 +31,15 @@ export function AuthProvider({ children }) {
     function signup(email, password, username) {
 
         console.log('signing up')
-        // let cnfmed = passwordConfirmation(password, pwdCnfm)
 
-        // //if this case doesn't come up then delete the below if statement 
-        // if (typeof cnfmed === "string") {
-        //     setError("Your password must be at least 6 characters")
-        // }
-        //username validation 
 
         console.log(username)
         if (username.length > 3) { //might want to add more validation rules
             postUsername(username, email, password)
         } else {
-            // console.log("ERROR")
+            console.log("invalid username")
             //setError("Please enter a username") // this is not enough
-            return Error("Username must be longer than 3 characters long")
+            throw ("Username must be longer than 3 characters long")
         }
 
         // if (cnfmed) {

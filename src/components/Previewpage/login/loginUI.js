@@ -76,9 +76,9 @@ const LoginUI = () => {
 
         //cnfm pw match
 
-        const validatePwds = passwordConfirmRef(passwordRef.current.value, passwordConfirmRef.current.value)
-
-        if (validatePwds) {
+        const validatePwds = passwordConfirmation(passwordRef.current.value, passwordConfirmRef.current.value)
+        console.log(validatePwds)
+        if (typeof validatePwds !== "string") {
 
             //create user 
             try {
@@ -87,6 +87,7 @@ const LoginUI = () => {
                 await signup(emailRef.current.value, passwordRef.current.value, userNameRef.current.value)
                 //back to login screen
                 goBackToLogin()
+                setErrorz(null)
 
             }
             catch (err) {
@@ -99,29 +100,6 @@ const LoginUI = () => {
             //else set invalid pwds err
             setErrorz(validatePwds)
         }
-
-
-
-        //DONT FORGET TO CHANGE ERROR CONDITIONAL IN JSX
-
-
-
-
-        // try {
-
-
-
-        //     console.log(error)
-        //     if (error === null) { //if no error
-        //         goBackToLogin()
-        //     }
-        // } catch {
-        //     console.log("Failed to create an account")
-        //     //setError("Failed to create an account")
-        // }
-        // setLoading(false)
-
-        //setShowError(true) //if there is an error then show it 
 
     }
 
@@ -194,7 +172,7 @@ const LoginUI = () => {
                 </form> :
                     // SIGN UP FORM
                     <form onSubmit={handleNewUserSubmit} className="create-account-box">
-                        {errorz !== null ? <h1>{error} </h1> : null}
+                        {errorz !== null ? <h1>{errorz} </h1> : null}
                         {/* {currentUser && currentUser.email} */}
                         <h2> Create an Account! </h2>
                         <div className="email-addy-field">
