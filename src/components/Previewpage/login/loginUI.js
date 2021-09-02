@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import "./loginUI.css"
 
@@ -9,6 +9,7 @@ import "firebase/firestore";
 
 
 import { useAuth } from "../../../contexts/authcontext";
+import { passwordConfirmation } from "./loginfuncs/validatelogin";
 
 import GoogleLogin from "./loginfuncs/existinguserloginfuncs";
 import Header from "../../header/header";
@@ -32,7 +33,7 @@ const LoginUI = () => {
 
     }
 
-
+    const history = useHistory()
 
     async function googleAuth(e) {
         const user = await GoogleLogin(e)
@@ -62,6 +63,7 @@ const LoginUI = () => {
     const passwordConfirmRef = useRef()
 
     const { signup, login, error, setError, currentUser } = useAuth()
+    const [errorz, setErrorz] = useState()
     const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -71,26 +73,59 @@ const LoginUI = () => {
     async function handleNewUserSubmit(e) {
         e.preventDefault()
 
-        try {
 
-            setLoading(true)
-            await signup(emailRef.current.value,
-                passwordRef.current.value, passwordConfirmRef.current.value, userNameRef.current.value)
-            console.log(error)
-            if (error === null) { //if no error
+        //cnfm pw match
+
+        const validatePwds = passwordConfirmRef(passwordRef.current.value, passwordConfirmRef.current.value)
+
+        if (validatePwds) {
+
+            //create user 
+            try {
+                setLoading(true)
+                //edit params
+                await signup(emailRef.current.value, passwordRef.current.value, userNameRef.current.value)
+                //back to login screen
                 goBackToLogin()
-            }
-        } catch {
-            console.log("Failed to create an account")
-            //setError("Failed to create an account")
-        }
-        setLoading(false)
 
-        setShowError(true) //if there is an error then show it 
+            }
+            catch (err) {
+                setLoading(false)
+                console.log("Failed to create an account")
+                console.log(err.message)
+                setErrorz(err.message)
+            }
+        } else {
+            //else set invalid pwds err
+            setErrorz(validatePwds)
+        }
+
+
+
+        //DONT FORGET TO CHANGE ERROR CONDITIONAL IN JSX
+
+
+
+
+        // try {
+
+
+
+        //     console.log(error)
+        //     if (error === null) { //if no error
+        //         goBackToLogin()
+        //     }
+        // } catch {
+        //     console.log("Failed to create an account")
+        //     //setError("Failed to create an account")
+        // }
+        // setLoading(false)
+
+        //setShowError(true) //if there is an error then show it 
 
     }
 
-    const history = useHistory()
+
 
 
     async function handleSignIn(e) {
@@ -102,10 +137,12 @@ const LoginUI = () => {
             await login(emailLoginRef.current.value, passWordLoginRef.current.value)
             history.push("/dashboard")
 
-        } catch {
+        } catch (err) {
             //maybe add that console log message to validation function.
             console.log("Failed to sign in")
-            setError(error)
+            console.log(err)
+            setErrorz(err.message)
+            //etShowError(true)
             setLoading(false)
         }
 
@@ -121,7 +158,7 @@ const LoginUI = () => {
                 {/* SIGN IN FORM */}
 
                 {!newAccount ? <form className="login-box">
-                    {error !== null && showError ? <h1> {error} </h1> : null}
+                    {errorz !== null ? <h1> {errorz} </h1> : null}
                     <h2> Login </h2>
                     <div className="username-field">
                         <label htmlFor="username"> Email: </label>
@@ -157,7 +194,7 @@ const LoginUI = () => {
                 </form> :
                     // SIGN UP FORM
                     <form onSubmit={handleNewUserSubmit} className="create-account-box">
-                        {error !== null && showError ? <h1>{error} </h1> : null}
+                        {errorz !== null ? <h1>{error} </h1> : null}
                         {/* {currentUser && currentUser.email} */}
                         <h2> Create an Account! </h2>
                         <div className="email-addy-field">

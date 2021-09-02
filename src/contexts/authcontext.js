@@ -28,45 +28,45 @@ export function AuthProvider({ children }) {
 
 
 
-    function signup(email, password, pwdCnfm, username) {
+    function signup(email, password, username) {
 
-        console.log('yo we signed up')
-        let cnfmed = passwordConfirmation(password, pwdCnfm)
+        console.log('signing up')
+        // let cnfmed = passwordConfirmation(password, pwdCnfm)
 
-        //if this case doesn't come up then delete the below if statement 
-        if (typeof cnfmed === "string") {
-            setError("Your password must be at least 6 characters")
-        }
+        // //if this case doesn't come up then delete the below if statement 
+        // if (typeof cnfmed === "string") {
+        //     setError("Your password must be at least 6 characters")
+        // }
         //username validation 
-        console.log("validating username")
+
         console.log(username)
-        if (cnfmed && username.length > 3) { //might want to add more validation rules
+        if (username.length > 3) { //might want to add more validation rules
             postUsername(username, email, password)
         } else {
-            console.log("ERROR")
-            setError("Please enter a username") // this is not enough
-            return
+            // console.log("ERROR")
+            //setError("Please enter a username") // this is not enough
+            return Error("Username must be longer than 3 characters long")
         }
 
-        if (cnfmed) {
-            return auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    var user = userCredential.user;
-                    //console.log(user)
-                    return user
-                    // ...
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    console.log("error message from failed acct creation")
-                    console.log(errorMessage)
-                    setError(errorMessage)
-                });
-        } if (!cnfmed) {
-            setError("Passwords do not match")
-        }
+        // if (cnfmed) {
+        return auth.createUserWithEmailAndPassword(email, password)
+        // .then((userCredential) => {
+        //     // Signed in
+        //     var user = userCredential.user;
+        //     //console.log(user)
+        //     return user
+        //     // ...
+        // })
+        //         .catch((error) => {
+        //             var errorCode = error.code;
+        //             var errorMessage = error.message;
+        //             console.log("error message from failed acct creation")
+        //             console.log(errorMessage)
+        //             setError(errorMessage)
+        //         });
+        // } if (!cnfmed) {
+        //     setError("Passwords do not match")
+        // }
 
 
     }
