@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn"
 import "./dashboard.css"
@@ -8,10 +8,14 @@ import { getUserInfo } from "../getuserdata/getuserdata";
 
 const Dashboard = () => {
 
-    const { currentUser, username, storeUserInfo } = useAuth();
+    const { currentUser, accountData } = useAuth();
+    console.log(accountData)
+
     const [account, setAccount] = useState("")
 
-
+    useEffect(() => {
+        setAccount(accountData)
+    }, [accountData])
     // useEffect(() => {
 
     //     getUserInfo(currentUser.email, callback)
@@ -27,35 +31,40 @@ const Dashboard = () => {
 
     // }, [username])
 
-
+    // { accountData === !undefined ? : null }
     return (
+
         <div>
+
             <div className="header-wrapper">
                 <Header />
                 <LoginBtn />
             </div>
-            <NavMenu account={account} />
-            <div className="dashboard-wrapper">
-                <p> <em>  Dashboard Page </em></p>
-                <h2> <em> Email: </em> {currentUser.email}</h2>
-                <h2> username :{account.username}</h2>
-                <h2> Shower-induced thoughts near you: </h2>
 
-                <section className="feed-wrapper">
-                    <ul className="feed-list">
-                        <li>
-                            <article> <u> Post 1, from Thaddeus McThot </u></article>
-                        </li>
-                        <li>
-                            <article> <u> Post 2, from Nissua Pappise </u></article>
-                        </li>
-                    </ul>
+            <NavMenu />
+            {accountData !== undefined ?
+                <div className="dashboard-wrapper">
+                    <p> <em>  Dashboard Page </em></p>
+                    <h2> <em> Email: </em> {currentUser.email}</h2>
+                    <h2> username :</h2>
+                    <h2> Shower-induced thoughts near you: </h2>
 
-                </section>
-            </div>
+                    <section className="feed-wrapper">
+                        <ul className="feed-list">
+                            <li>
+                                <article> <u> Post 1, from Thaddeus McThot </u></article>
+                            </li>
+                            <li>
+                                <article> <u> Post 2, from Nissua Pappise </u></article>
+                            </li>
+                        </ul>
 
+                    </section>
+                </div>
+                : null}
 
         </div >
+
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./loginUI.css"
 
@@ -24,19 +24,19 @@ const LoginUI = () => {
 
     function activateSignup() {
         activateNewAccount(true)
-        setShowError(false)
+
     }
 
     function goBackToLogin() {
         activateNewAccount(false)
-        setShowError(false)
+
 
     }
 
     const history = useHistory()
 
     async function googleAuth(e) {
-        const user = await GoogleLogin(e)
+        await GoogleLogin(e)
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
@@ -59,13 +59,13 @@ const LoginUI = () => {
 
     //SIGN UP REFS
     const emailRef = useRef();
-    const userNameRef = useRef();
+    const userNameRef = useRef("");
     const passwordRef = useRef();
     const passwordConfirmRef = useRef()
 
-    const { signup, login, } = useAuth()
+    const { signup, login } = useAuth()
     const [error, setError] = useState()
-    const [showError, setShowError] = useState(false)
+
     const [loading, setLoading] = useState(false)
 
 
@@ -85,8 +85,12 @@ const LoginUI = () => {
             try {
                 setLoading(true)
                 const result = await signup(emailRef.current.value, passwordRef.current.value, userNameRef.current.value)
-                //back to login screen
-                if (typeof result !== "string") {
+                // setUsername(userNameRef.current.value)
+
+                if (typeof result !== "string") { //success block
+                    // setUsername(userNameRef.current.value)
+
+                    //back to login screen
                     goBackToLogin()
                     setError(null)
                 } else { //invalid username 
@@ -109,6 +113,12 @@ const LoginUI = () => {
     }
 
 
+    // useEffect(() => {
+    //     // console.log("useEffect is going on ")
+    //     // setUsername(userNameRef.current.value)
+    //     console.log(userName)
+    // }, [userName])
+
 
 
     async function handleSignIn(e) {
@@ -118,6 +128,7 @@ const LoginUI = () => {
             setLoading(true)
 
             await login(emailLoginRef.current.value, passWordLoginRef.current.value)
+
             history.push("/dashboard")
 
         } catch (err) {

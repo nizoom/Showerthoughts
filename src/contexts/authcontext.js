@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { auth } from "../firebase/firebase";
-import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { postUsername } from "../components/postuserdata/postuserdata";
-
+import { getUserInfo } from "../components/getuserdata/getuserdata";
 // import { getUserInfo } from "../components/getuserdata/getuserdata";
 
 
@@ -21,7 +20,8 @@ export function AuthProvider({ children }) {
 
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
-    //const [error, setError] = useState();
+    // const [userName, setUsername] = useState()
+    const [accountData, setAccountData] = useState()
 
 
 
@@ -32,7 +32,7 @@ export function AuthProvider({ children }) {
         console.log('signing up')
 
 
-        console.log(username)
+        // console.log(username)
         if (username.length > 3) { //might want to add more validation rules
             postUsername(username, email, password)
         } else {
@@ -40,7 +40,6 @@ export function AuthProvider({ children }) {
 
             return "Username must be longer than 3 characters long"
         }
-
         return auth.createUserWithEmailAndPassword(email, password)
 
 
@@ -64,8 +63,21 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(user => {
             console.log(user)
             setCurrentUser(user)
-            setLoading(false)
-            //establishUser()
+            setLoading(false);
+
+            //always get user info after successful login
+            if (user !== null) {
+                (async function () {
+                    await getUserInfo(user.email, callback)
+                })();
+
+                function callback(data) {
+                    // console.log(data)
+                    setAccountData(data)
+                }
+            }
+
+
 
 
 
@@ -99,10 +111,10 @@ export function AuthProvider({ children }) {
     }), [context, setContext])
 
     const [randomStr, setRandomStr] = useState("Beginning");
-    //console.log(randomStr)
+    // console.log(userName)
 
     return (
-        <AuthContext.Provider value={{ signup, login, logout, currentUser }}>
+        <AuthContext.Provider value={{ signup, login, logout, currentUser, accountData }}>
 
             {!loading && children}
         </AuthContext.Provider>

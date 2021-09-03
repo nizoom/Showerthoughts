@@ -4,7 +4,7 @@ import firebase from "firebase";
 const db = firebase.database()
 
 
-export function getUserInfo(neededAccountEmail, callback) {
+export async function getUserInfo(neededAccountEmail, callback) {
     console.log("fired")
     //get username from db 
     //iterate through account email till there is a match with the newly logged in person
@@ -12,7 +12,7 @@ export function getUserInfo(neededAccountEmail, callback) {
 
     const usersRef = db.ref("users")
 
-    usersRef.on('value', (snapshot) => {
+    await usersRef.on('value', (snapshot) => {
         const users = snapshot.val();
         const dataToArr = Object.entries(users)
         let index = 0;
@@ -26,19 +26,15 @@ export function getUserInfo(neededAccountEmail, callback) {
 
         const accountFound = dataToArr[index]
 
-        //callback(accountFound)
-
-
+        callback(accountFound)
 
         console.log(accountFound)
-        return accountFound
-        //accnt.push(accountFound)
+        //return accountFound
+
 
 
 
     })
-    //return accnt
-    //return dataToArr of found index
 
 
 }
