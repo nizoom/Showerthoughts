@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
 import { postNewThought } from "../postuserdata/postuserdata";
 
@@ -14,11 +14,11 @@ const NewPostPage = (props) => {
 
     const [username, setUsername] = useState()
 
-    useEffect(() => {
-        setUsername(accountData[1].username)
-    }, [accountData])
 
-
+    function establishUsername(name) {
+        setUsername(name)
+        return name
+    }
 
 
     const subjectThoughtRef = useRef();
@@ -50,7 +50,7 @@ const NewPostPage = (props) => {
             <NavMenu />
             <div className="post-form-wrapper">
                 <form onSubmit={handleNewPostSubmit}>
-                    <h2> <b> <u> New Post from {username} </u></b> </h2>
+                    <h2> <b> <u> New Post from {() => establishUsername(accountData[1].username)} </u></b> </h2>
                     <div className="subject-field">
                         <label htmlFor="subject"> Subject: </label>
                         <input type="text" name="text-thought" id="text-thought" ref={subjectThoughtRef} />

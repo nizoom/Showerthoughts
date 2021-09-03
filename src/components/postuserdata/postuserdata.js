@@ -40,7 +40,12 @@ export function postNewThought(subject, body, username) {
         const newPostKey = firebase.database().ref(`users/${username}s`).child('posts').push().key;
 
         const updates = {};
-        //updates['/posts/' + newPostKey] = postData;
+
+        //this is to add the post to a news feed by saving the postkey to another collection in the db
+        //for that purpose 
+
+        //updates['/posts/' + newPostKey] = postData;  ^
+
         updates['/users/' + `/${username}/posts/${newPostKey}`] = postData;
         console.log(updates)
 
