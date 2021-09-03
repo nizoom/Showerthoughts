@@ -29,7 +29,7 @@ export async function getUserInfo(neededAccountEmail, callback) {
         callback(accountFound)
 
         console.log(accountFound)
-        //return accountFound
+
 
 
 
@@ -40,36 +40,3 @@ export async function getUserInfo(neededAccountEmail, callback) {
 }
 
 
-
-    //return whole userobject and we can parse as needed
-
-
-
-    // const userRef = database.ref('users/' + username);
-    // userRef.on('value', function (snapshot) {
-    //     const userInfo = snapshot.val()
-    //     return userInfo.username
-    //     //alert(userInfo.username)
-    // })
-
-
-       // for (let email in users.email) {
-        //     if (email === neededAccountEmail) {
-        //         console.log(users[email])
-        //     }
-        // }
-
-
-
-
-        // const dataToArr = Object.entries(data)
-
-
-        // for (let i = 0; i < dataToArr.length; i++) {
-        //     const accountEmail = dataToArr[i][1].email
-        //     if (accountEmail === email) {
-        //         const account = dataToArr[i]
-        //         console.log(account)
-        //         return account;
-        //     }
-        // }

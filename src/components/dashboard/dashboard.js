@@ -46,7 +46,7 @@ const Dashboard = () => {
                 <div className="dashboard-wrapper">
                     <p> <em>  Dashboard Page </em></p>
                     <h2> <em> Email: </em> {currentUser.email}</h2>
-                    <h2> username :</h2>
+                    <h2> username : {accountData[1].username}</h2>
                     <h2> Shower-induced thoughts near you: </h2>
 
                     <section className="feed-wrapper">
