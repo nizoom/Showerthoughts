@@ -1,6 +1,13 @@
 import firebase from "firebase";
+// import { getDatabase, ref } from "firebase/firebase";
 
-const database = firebase.database()
+
+
+const database = firebase.database();
+// const getDB = getDatabase();
+
+
+
 
 export function postUsername(username, email, password) {
     try {
@@ -8,7 +15,7 @@ export function postUsername(username, email, password) {
             email: email,
             password: password,
             username: username,
-            posts: null
+            posts: ""
         })
 
         console.log('data saved')
@@ -20,17 +27,35 @@ export function postUsername(username, email, password) {
 
 
 export function postNewThought(subject, body, username) {
-    try {
-        console.log("posting new messge")
-        var newKey = database.ref.push();
-        database.ref().child(`${username}/posts/` + newKey)
-            .update({ title: subject, body: body });
+    console.log("posting new messge")
+    const postid = generateID()
+    const postData = {
+        title: subject,
+        body: body,
+        postid: postid
+    }
 
-        // database.ref('users/' + `${username}/posts`).set({
-        //     posts: { "subject": subject, "body": body }
-        // })
+    try {
+
+        const newPostKey = firebase.database().ref(`users/${username}s`).child('posts').push().key;
+
+        const updates = {};
+        //updates['/posts/' + newPostKey] = postData;
+        updates['/users/' + `/${username}/posts/${newPostKey}`] = postData;
+        console.log(updates)
+
+        return firebase.database().ref().update(updates);
+
+
+
     } catch (error) {
         console.log('failed to add post')
-        console.log(error)
+        console.log(error.messge)
+    }
+
+    function generateID() {
+        let r = (Math.random() + 1).toString(36).substring(7);
+        console.log(r);
+        return r;
     }
 }

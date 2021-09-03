@@ -31,7 +31,7 @@ export async function getUserInfo(neededAccountEmail, callback) {
 
         callback(accountFound)
 
-        console.log(accountFound)
+        // console.log(accountFound)
 
     })
 

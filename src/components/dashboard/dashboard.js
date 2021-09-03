@@ -1,37 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn"
 import "./dashboard.css"
 import { useAuth } from "../../contexts/authcontext";
 import NavMenu from "../navmenu/nav"
-import { getUserInfo } from "../getuserdata/getuserdata";
 
 const Dashboard = () => {
 
     const { currentUser, accountData } = useAuth();
-    console.log(accountData)
+    // console.log(accountData)
 
-    const [account, setAccount] = useState("")
-
-    useEffect(() => {
-        setAccount(accountData)
-    }, [accountData])
-    // useEffect(() => {
-
-    //     getUserInfo(currentUser.email, callback)
-
-    //     function callback(foundAccount) {
-    //         console.log(foundAccount)
-    //         //set for display on dashboard
-    //         setAccount(foundAccount[1])
-    //         //store in auth context for other components to use 
-    //         //storeUserInfo(foundAccount)
-    //     }
-
-
-    // }, [username])
-
-    // { accountData === !undefined ? : null }
     return (
 
         <div>
