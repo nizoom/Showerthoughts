@@ -1,5 +1,5 @@
 import firebase from "firebase";
-// import { postUsername } from "../setuserdata/postuserdata";
+
 
 const db = firebase.database()
 
@@ -18,7 +18,10 @@ export async function getUserInfo(neededAccountEmail, callback) {
         let index = 0;
         dataToArr.forEach(account => {
             const accountEmail = account[1].email
+
+
             if (accountEmail === neededAccountEmail) {
+                // console.log(`${accountEmail} and ${neededAccountEmail}`)
                 index += dataToArr.indexOf(account)
             }
 
@@ -29,10 +32,6 @@ export async function getUserInfo(neededAccountEmail, callback) {
         callback(accountFound)
 
         console.log(accountFound)
-
-
-
-
 
     })
 

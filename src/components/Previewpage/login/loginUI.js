@@ -53,6 +53,7 @@ const LoginUI = () => {
     }
 
 
+
     //LOGIN REFS
     const emailLoginRef = useRef();
     const passWordLoginRef = useRef();
@@ -92,6 +93,9 @@ const LoginUI = () => {
 
                     //back to login screen
                     goBackToLogin()
+                    //clear ref values
+                    emailLoginRef.current.value = ""
+                    passWordLoginRef.current.value = ""
                     setError(null)
                 } else { //invalid username 
                     setError(result)
