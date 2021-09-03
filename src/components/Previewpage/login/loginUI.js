@@ -44,10 +44,11 @@ const LoginUI = () => {
                 const uid = user.uid;
                 console.log(user)
                 history.push("/dashboard")
-            } else {
-                // User is signed out
-                // ...
             }
+            // else {
+            //     // User is signed out
+            //     // ...
+            // }
         });
     }
 
@@ -62,8 +63,8 @@ const LoginUI = () => {
     const passwordRef = useRef();
     const passwordConfirmRef = useRef()
 
-    const { signup, login, error, setError, currentUser } = useAuth()
-    const [errorz, setErrorz] = useState()
+    const { signup, login, } = useAuth()
+    const [error, setError] = useState()
     const [showError, setShowError] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -83,22 +84,26 @@ const LoginUI = () => {
             //create user 
             try {
                 setLoading(true)
-                //edit params
-                await signup(emailRef.current.value, passwordRef.current.value, userNameRef.current.value)
+                const result = await signup(emailRef.current.value, passwordRef.current.value, userNameRef.current.value)
                 //back to login screen
-                goBackToLogin()
-                setErrorz(null)
+                if (typeof result !== "string") {
+                    goBackToLogin()
+                    setError(null)
+                } else { //invalid username 
+                    setError(result)
+                }
+                setLoading(false) //reactivate buttons
 
             }
             catch (err) {
                 setLoading(false)
                 console.log("Failed to create an account")
                 console.log(err.message)
-                setErrorz(err.message)
+                setError(err.message)
             }
         } else {
             //else set invalid pwds err
-            setErrorz(validatePwds)
+            setError(validatePwds)
         }
 
     }
@@ -119,7 +124,7 @@ const LoginUI = () => {
             //maybe add that console log message to validation function.
             console.log("Failed to sign in")
             console.log(err)
-            setErrorz(err.message)
+            setError(err.message)
             //etShowError(true)
             setLoading(false)
         }
@@ -136,7 +141,7 @@ const LoginUI = () => {
                 {/* SIGN IN FORM */}
 
                 {!newAccount ? <form className="login-box">
-                    {errorz !== null ? <h1> {errorz} </h1> : null}
+                    {error !== null ? <h1> {error} </h1> : null}
                     <h2> Login </h2>
                     <div className="username-field">
                         <label htmlFor="username"> Email: </label>
@@ -172,8 +177,8 @@ const LoginUI = () => {
                 </form> :
                     // SIGN UP FORM
                     <form onSubmit={handleNewUserSubmit} className="create-account-box">
-                        {errorz !== null ? <h1>{errorz} </h1> : null}
-                        {/* {currentUser && currentUser.email} */}
+                        {error !== null ? <h1>{error} </h1> : null}
+
                         <h2> Create an Account! </h2>
                         <div className="email-addy-field">
                             <label htmlFor="email-addy"> Email: </label>
@@ -213,12 +218,3 @@ const LoginUI = () => {
 }
 
 export default LoginUI;
-
-  // useEffect(() => {
-    //     console.log("firing")
-    //     if (currentUser !== null) {
-    //         console.log('going to dashboard')
-    //         history.push("/dashboard")
-    //     }
-
-    // }, [currentUser])

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import { auth } from "../firebase/firebase";
 import { loginValidation } from "../components/Previewpage/login/loginfuncs/validatelogin";
-import { passwordConfirmation } from "../components/Previewpage/login/loginfuncs/validatelogin";
 import { postUsername } from "../components/postuserdata/postuserdata";
 
 // import { getUserInfo } from "../components/getuserdata/getuserdata";
@@ -22,7 +21,7 @@ export function AuthProvider({ children }) {
 
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState();
+    //const [error, setError] = useState();
 
 
 
@@ -38,56 +37,19 @@ export function AuthProvider({ children }) {
             postUsername(username, email, password)
         } else {
             console.log("invalid username")
-            //setError("Please enter a username") // this is not enough
-            throw ("Username must be longer than 3 characters long")
+
+            return "Username must be longer than 3 characters long"
         }
 
-        // if (cnfmed) {
         return auth.createUserWithEmailAndPassword(email, password)
-        // .then((userCredential) => {
-        //     // Signed in
-        //     var user = userCredential.user;
-        //     //console.log(user)
-        //     return user
-        //     // ...
-        // })
-        //         .catch((error) => {
-        //             var errorCode = error.code;
-        //             var errorMessage = error.message;
-        //             console.log("error message from failed acct creation")
-        //             console.log(errorMessage)
-        //             setError(errorMessage)
-        //         });
-        // } if (!cnfmed) {
-        //     setError("Passwords do not match")
-        // }
+
 
 
     }
 
     function login(email, password) {
         console.log("attempting log in")
-        setError(null)
         return auth.signInWithEmailAndPassword(email, password)
-        // .then((userCredential) => {
-        //     // Signed in
-        //     var user = userCredential.user;
-        //     //console.log(user)
-        //     return user
-        //     // ...
-        // })
-        // .catch((error) => {
-        //     const errorCode = error.code;
-        //     // var errorMessage = error.message;
-        //     console.log(errorCode)
-        //     //console.log(errorMessage)
-        //     let errorMessage = loginValidation(errorCode)
-        //     setError(errorMessage)
-        //     return false
-        // });
-        //get username from db 
-        //iterate through username.email till there is a match
-
 
     }
 
@@ -113,25 +75,7 @@ export function AuthProvider({ children }) {
 
         return unsubscribe
     }, []) // or userInfoHook
-    // async function establishUser() {
-    //     console.log("firing in auth")
-    //     const userInfo = await getUserInfo(currentUser.email)
-    //     console.log(userInfo)
-    //     setUserInfoHook(userInfo)
-    // }
 
-
-    // const userRef = React.useRef(null)
-
-    // function storeUserInfo(userInfoz) {
-
-    //     console.log(userInfoz)
-    //     console.log("storing user info")
-
-    //     //setUserInfo(userInfoz)
-    //     userRef.current = userInfoz;
-
-    // }
 
 
     // const value = {
@@ -145,18 +89,8 @@ export function AuthProvider({ children }) {
     // }
 
 
-    // console.log(typeof value)
-    // setRandomStr("This is a test string ")
-    const [context, setContext] = useState(
 
-        // contextMethods: [currentUser,
-        //     signup,
-        //     login,
-        //     logout,
-        //     error,
-        //     randomStr,
-        //     setRandomStr]
-    )
+    const [context, setContext] = useState()
 
 
 
@@ -168,7 +102,7 @@ export function AuthProvider({ children }) {
     //console.log(randomStr)
 
     return (
-        <AuthContext.Provider value={{ signup, login, error, setError, logout, currentUser }}>
+        <AuthContext.Provider value={{ signup, login, logout, currentUser }}>
 
             {!loading && children}
         </AuthContext.Provider>
