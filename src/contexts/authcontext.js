@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
                 })();
 
                 function callback(data) {
-                    // console.log(data)
+                    console.log(data)
                     setAccountData(data)
                 }
             }
