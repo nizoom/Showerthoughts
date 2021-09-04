@@ -49,7 +49,15 @@ export function postNewThought(subject, body, username) {
         updates['/users/' + `/${username}/posts/${newPostKey}`] = postData;
         console.log(updates)
 
-        return firebase.database().ref().update(updates);
+        return firebase.database().ref().update(updates, (error) => {
+            if (error) {
+                console.log('failed to add post')
+                console.log(error.messge)
+            } else {
+                console.log("Data saved successfully")
+            }
+        });
+        //check to see if POST was succesful 
 
 
 
@@ -64,3 +72,6 @@ export function postNewThought(subject, body, username) {
         return r;
     }
 }
+
+
+

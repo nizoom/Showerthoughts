@@ -5,13 +5,13 @@ import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn";
 import NavMenu from "../navmenu/nav";
 import { getUserPosts } from "../getuserdata/getuserdata";
+import RenderFeed from "../renderfeed/renderfeed";
 
 
 const ProfilePage = (props) => {
 
     const { accountData } = useAuth();
 
-    // const [previousPosts, setPreviousPosts] = useState()
 
     // console.log(accountData)
 
@@ -39,35 +39,6 @@ const ProfilePage = (props) => {
         console.log(postsRef)
     }
 
-    /* {allPosts.map((post) => {
-                                  <article>
-                                      <h3> {post.title}</h3>
-                                      <p> {post.body} </p>
-                                  </article>
-  
-                              })} */
-
-    // const renderPosts = numbers.map((number) =>
-    //     <li key={number.toString()}>
-    //         {number}
-    //     </li>
-    // );
-    // return (
-    //     <ul>{listItems}</ul>
-    // );
-    // }
-
-    const renderPosts = postsRef.current.map((post) => {
-
-        return (
-            < li key={postsRef.current.indexOf(post)}>
-                <h3> {post.title}</h3>
-                <p> {post.body} </p>
-            </li>)
-
-    })
-
-
 
 
     return (
@@ -86,26 +57,13 @@ const ProfilePage = (props) => {
 
                         <div className="big-posts-wrapper">
                             {/* <button onClick={renderPosts}> </button> */}
-                            <ul>
+                            {/* <ul>
                                 {renderPosts}
-                            </ul>
+                            </ul> */}
 
-
-
-
+                            <RenderFeed postData={postsRef.current} />
                         </div>
-
-
-
                     </section>
-
-
-
-
-
-
-
-
 
                 </div>
                 : null}

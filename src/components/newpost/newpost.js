@@ -12,20 +12,18 @@ const NewPostPage = (props) => {
 
     const { accountData } = useAuth();
 
-    const [username, setUsername] = useState()
+    const [successfulPostMessage, setSuccessfulPostMessage] = useState(false)
 
 
-    function establishUsername(name) {
-        setUsername(name)
-        return name
+    const usernameRef = useRef()
+    //save user data in refs 
+    if (accountData !== undefined) {
+        usernameRef.current = accountData[1].username
     }
-
 
     const subjectThoughtRef = useRef();
 
     const textThoughtRef = useRef();
-
-
 
 
     function handleNewPostSubmit(e) {
@@ -37,7 +35,7 @@ const NewPostPage = (props) => {
         const body = textThoughtRef.current.value
         // console.log(headerThoughtRef.current.value)
         // console.log(textThoughtRef.current.value)
-        postNewThought(subject, body, username)
+        postNewThought(subject, body, usernameRef)
     }
 
     return (
@@ -47,29 +45,34 @@ const NewPostPage = (props) => {
                 <LoginBtn className="loginBtn-component" />
 
             </header>
+
             <NavMenu />
-            <div className="post-form-wrapper">
-                <form onSubmit={handleNewPostSubmit}>
-                    <h2> <b> <u> New Post from {() => establishUsername(accountData[1].username)} </u></b> </h2>
-                    <div className="subject-field">
-                        <label htmlFor="subject"> Subject: </label>
-                        <input type="text" name="text-thought" id="text-thought" ref={subjectThoughtRef} />
-                    </div>
-                    <div className="textarea-field">
-                        <textarea className="textarea is-primary" placeholder="I was thinking..." maxLength="500"
-                            ref={textThoughtRef}
-                        ></textarea>
-                    </div>
-                    <div className="submit-newpost-wrapper">
-                        <button type="submit">
-                            Submit
-                        </button>
-                    </div>
-                </form>
-            </div>
+            {accountData !== undefined ?
+                <div className="post-form-wrapper">
+                    <form onSubmit={handleNewPostSubmit}>
+                        <h2> <b> <u> New Post from {usernameRef.current} </u></b> </h2>
+                        <div className="subject-field">
+                            <label htmlFor="subject"> Subject: </label>
+                            <input type="text" name="text-thought" id="text-thought" ref={subjectThoughtRef} />
+                        </div>
+                        <div className="textarea-field">
+                            <textarea className="textarea is-primary" placeholder="I was thinking..." maxLength="500"
+                                ref={textThoughtRef}
+                            ></textarea>
+                        </div>
+                        <div className="submit-newpost-wrapper">
+                            <button type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                : null}
 
         </div >
     )
 }
 
 export default NewPostPage;
+
+// () => establishUsername(accountData[1].username)

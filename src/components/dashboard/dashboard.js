@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn"
 import "./dashboard.css"
@@ -8,7 +8,19 @@ import NavMenu from "../navmenu/nav"
 const Dashboard = () => {
 
     const { currentUser, accountData } = useAuth();
-    // console.log(accountData)
+
+    const currentUserRef = useRef();
+    const accountDataRef = useRef();
+
+    //save user in a ref
+    if (currentUser !== undefined) {
+        currentUserRef.current = currentUser;
+    }
+
+    //save account data in a ref
+    if (accountData !== undefined) {
+        accountDataRef.current = accountData
+    }
 
     return (
 

@@ -1,0 +1,11 @@
+.article-wrapper{
+    text-align: center;
+    border: 2px solid black;
+    margin: 5%;
+    background-color: blanchedalmond;
+   
+}
+
+.post-wrapper{
+    list-style-type: none;
+}
