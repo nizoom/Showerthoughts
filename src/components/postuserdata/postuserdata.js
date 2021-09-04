@@ -26,7 +26,7 @@ export function postUsername(username, email, password) {
 }
 
 
-export function postNewThought(subject, body, username) {
+export function postNewThought(subject, body, username, callback) {
     console.log("posting new messge")
     const postid = generateID()
     const postData = {
@@ -35,36 +35,39 @@ export function postNewThought(subject, body, username) {
         postid: postid
     }
 
-    try {
+    // try {
 
-        const newPostKey = firebase.database().ref(`users/${username}s`).child('posts').push().key;
+    const newPostKey = firebase.database().ref(`users/${username}s`).child('posts').push().key;
 
-        const updates = {};
+    const updates = {};
 
-        //this is to add the post to a news feed by saving the postkey to another collection in the db
-        //for that purpose 
+    //this is to add the post to a news feed by saving the postkey to another collection in the db
+    //for that purpose 
 
-        //updates['/posts/' + newPostKey] = postData;  ^
+    //updates['/posts/' + newPostKey] = postData;  ^
 
-        updates['/users/' + `/${username}/posts/${newPostKey}`] = postData;
-        console.log(updates)
+    updates['/users/' + `/${username}/posts/${newPostKey}`] = postData;
+    console.log(updates)
 
-        return firebase.database().ref().update(updates, (error) => {
-            if (error) {
-                console.log('failed to add post')
-                console.log(error.messge)
-            } else {
-                console.log("Data saved successfully")
-            }
-        });
-        //check to see if POST was succesful 
+    //check to see if POST was succesful 
+    return firebase.database().ref().update(updates, (error) => {
+        if (error) {
+            // console.log('failed to add post')
+            console.log(error.messge)
+            callback(false, error.message)
+        } else {
+            // console.log("Data saved successfully")
+            callback(true)
+        }
+    });
 
 
 
-    } catch (error) {
-        console.log('failed to add post')
-        console.log(error.messge)
-    }
+
+    // } catch (error) {
+    //     console.log('failed to add post')
+    //     console.log(error.messge)
+    // }
 
     function generateID() {
         let r = (Math.random() + 1).toString(36).substring(7);

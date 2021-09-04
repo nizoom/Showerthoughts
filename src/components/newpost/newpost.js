@@ -35,8 +35,24 @@ const NewPostPage = (props) => {
         const body = textThoughtRef.current.value
         // console.log(headerThoughtRef.current.value)
         // console.log(textThoughtRef.current.value)
-        postNewThought(subject, body, usernameRef)
+        postNewThought(subject, body, usernameRef.current, determinePostSuccess)
+
     }
+
+    function determinePostSuccess(boolean, err) {
+        if (boolean) {
+            console.log("callback: Data saved successfully in")
+            setSuccessfulPostMessage(true)
+            setTimeout(function () {  // fade out after 3 seconds
+                setSuccessfulPostMessage(false)
+            }, 3000);
+        } else {
+            console.log('failed to add post')
+            console.log(err)
+            //display err
+        }
+    }
+
 
     return (
         <div>
@@ -47,6 +63,7 @@ const NewPostPage = (props) => {
             </header>
 
             <NavMenu />
+            {successfulPostMessage ? <h3 className="success"> message posted!</h3> : null}
             {accountData !== undefined ?
                 <div className="post-form-wrapper">
                     <form onSubmit={handleNewPostSubmit}>
@@ -68,6 +85,7 @@ const NewPostPage = (props) => {
                     </form>
                 </div>
                 : null}
+
 
         </div >
     )
