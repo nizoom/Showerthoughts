@@ -24,7 +24,7 @@ const NavMenu = (props) => {
                 </button> :
 
                     <div className="active-menu-wrapper">
-                        <button>
+                        <button onClick={() => pageClick("dashboard")}>
                             Feed
                         </button>
 
