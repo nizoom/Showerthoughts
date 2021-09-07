@@ -38,8 +38,8 @@ export async function getUserInfo(neededAccountEmail, callback) {
 }
 
 
-export async function getUserPosts(email) {
-    //if user has same email as email passed then return all posts
+// export async function getUserPosts(email) {
+//     //if user has same email as email passed then return all posts
 
-}
+// }
 

@@ -13,7 +13,7 @@ const ProfilePage = (props) => {
     const { accountData } = useAuth();
 
 
-    // console.log(accountData)
+
 
     //Make a state obj that assigns commonly used properties? 
     // const userInfoObj = {
@@ -24,11 +24,23 @@ const ProfilePage = (props) => {
 
     function allPosts() {
         console.log("called")
-        const allPostsObj = accountData[1].posts
-        const allPostsArr = Object.values(allPostsObj).map((value) => {
-            return value
-        })
-        console.log(allPostsArr)
+
+        //console.log(accountData[1]) //into the users folder
+        console.log(accountData[1])
+
+        //include postkey in allPostsArr
+        let allPostsArr = [];
+
+        for (const [postKey, postData] of Object.entries(accountData[1].posts)) {
+            //console.log(`${key}: ${JSON.stringify(value)}`);
+            //console.log(value)
+
+            allPostsArr.push({ postData, postKey })
+        }
+
+
+        // console.log(allPostsArr)
+
         //setPreviousPosts(allPostsArr)
         postsRef.current = allPostsArr
         return allPostsArr;
@@ -61,7 +73,8 @@ const ProfilePage = (props) => {
                                 {renderPosts}
                             </ul> */}
 
-                            <RenderFeed postData={postsRef.current} deleteAccess={true} />
+                            <RenderFeed postData={postsRef.current} deleteAccess={true}
+                                username={accountData[1].username} />
                         </div>
                     </section>
 

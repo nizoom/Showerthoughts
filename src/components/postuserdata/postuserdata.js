@@ -1,12 +1,7 @@
 import firebase from "firebase";
-// import { getDatabase, ref } from "firebase/firebase";
-
 
 
 const database = firebase.database();
-// const getDB = getDatabase();
-
-
 
 
 export function postUsername(username, email, password) {
@@ -35,7 +30,6 @@ export function postNewThought(subject, body, username, callback) {
         postid: postid
     }
 
-    // try {
 
     const newPostKey = firebase.database().ref(`users/${username}s`).child('posts').push().key;
 
@@ -52,22 +46,13 @@ export function postNewThought(subject, body, username, callback) {
     //check to see if POST was succesful 
     return firebase.database().ref().update(updates, (error) => {
         if (error) {
-            // console.log('failed to add post')
             console.log(error.messge)
             callback(false, error.message)
         } else {
-            // console.log("Data saved successfully")
             callback(true)
         }
     });
 
-
-
-
-    // } catch (error) {
-    //     console.log('failed to add post')
-    //     console.log(error.messge)
-    // }
 
     function generateID() {
         let r = (Math.random() + 1).toString(36).substring(7);
@@ -76,5 +61,14 @@ export function postNewThought(subject, body, username, callback) {
     }
 }
 
+//get postkey 
+export async function deletePost(postkey, username) {
+    try {
+        database.ref(`users/${username}/posts/${postkey}`).remove()
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 
