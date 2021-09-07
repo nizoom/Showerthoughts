@@ -61,7 +61,7 @@ const ProfilePage = (props) => {
                                 {renderPosts}
                             </ul> */}
 
-                            <RenderFeed postData={postsRef.current} />
+                            <RenderFeed postData={postsRef.current} deleteAccess={true} />
                         </div>
                     </section>
 
