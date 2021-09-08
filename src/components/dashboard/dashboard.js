@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn"
 import "./dashboard.css"
@@ -15,7 +15,11 @@ const Dashboard = () => {
     const accountDataRef = useRef();
     const postDataRef = useRef();
 
+    const [render, setRender] = useState(0)
+
+
     //get, format, and store feed in useRef
+
     useEffect(() => {
         (async function () {
             await getFeed(callback)
@@ -23,9 +27,10 @@ const Dashboard = () => {
             function callback(postsdata) {
                 console.log(postsdata)
                 postDataRef.current = postsdata;
+                setRender(1)
             }
         })();
-    })
+    }, [postDataRef])
 
 
 
@@ -58,21 +63,17 @@ const Dashboard = () => {
                     <h2> Shower-induced thoughts near you: </h2>
 
                     <section className="feed-wrapper">
-                        <ul className="feed-list">
-                            <li>
-                                <article> <u> Post 1, from Thaddeus McThot </u></article>
-                            </li>
-                            <li>
-                                <article> <u> Post 2, from Nissua Pappise </u></article>
-                            </li>
-                        </ul>
+                        {postDataRef.current !== undefined ?
+                            <RenderFeed deleteAccess={false} postData={postDataRef.current} page={"feed"} />
+                            : null
+
+                        }
 
                     </section>
                 </div>
                 : null}
 
-            <button onClick={getFeed}> get Feed</button>
-            <RenderFeed deleteAccess={false} postData={postDataRef.current} page={"feed"} />
+
 
         </div >
 

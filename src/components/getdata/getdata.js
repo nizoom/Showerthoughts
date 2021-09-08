@@ -17,36 +17,30 @@ export async function getFeed(callback) {
         let postsFromPosters = []
 
         getPosters.forEach(user => {
-            //console.log(user)
             const postObj = user[1].posts
             formatPosts(postObj)
-
-            //postObj.forEach(post => postsFromPosters.push(post))
         })
 
-        console.log(postsFromPosters);
+        //sort postsFromPosters by recency
+        postsFromPosters.sort(function (post1, post2) {
+            //console.log(post2.postData.timestamp)
+            return post2.postData.timestamp - post1.postData.timestamp
+        })
 
-        //order by recency
-
-        // postsFromPosters.sort(function (post1, post2) {
-        //     return post2.timestamp - post1.timestamp;
-        // })
 
         // console.log(postsFromPosters);
-        //sort postsFromPosters by recency
-
-        callback(postsFromPosters);
 
         function formatPosts(postObj) {
-            console.log(postObj)
+            //same format as profile page posts
             for (const [postKey, postData] of Object.entries(postObj)) {
                 //console.log(`${postKey}: ${JSON.stringify(postData)}`);
                 postsFromPosters.push({ postData, postKey })
-                //allPostsArr.push({ postData, postKey })
             }
 
-
         }
+
+        callback(postsFromPosters);
+
 
     })
 

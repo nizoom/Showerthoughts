@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/authcontext";
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn";
 import NavMenu from "../navmenu/nav";
-import { getUserPosts } from "../getuserdata/getuserdata";
+import { getUserInfo } from "../getdata/getuserdata";
 import RenderFeed from "../renderfeed/renderfeed";
 
 
