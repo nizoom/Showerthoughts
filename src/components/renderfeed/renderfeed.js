@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 
 import "./renderfeed.css"
 import { deletePost } from "../postuserdata/postuserdata";
+import { toReadableDate } from "./formatpostdate";
 
 
 const RenderFeed = (props) => {
@@ -43,14 +44,13 @@ const RenderFeed = (props) => {
         }
     }
 
-    //console.log(props.postData)
 
     const renderPosts = props.postData.map((post) => {
         //const id = post.postData.postid;
         //console.log(post)
         const title = post.postData.title
         const body = post.postData.body
-        const date = post.postData.date
+        const date = toReadableDate(post.postData.date)
         const postkey = post.postKey;
 
         return (
