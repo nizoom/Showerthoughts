@@ -40,7 +40,8 @@ export async function getFeed(callback) {
         }
 
         callback(postsFromPosters);
-
+        //may want to have a limit of 50-100 posts 
+        // if time stamp is less than ___ filter out bc it is too old
 
     })
 

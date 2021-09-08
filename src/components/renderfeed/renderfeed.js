@@ -50,8 +50,8 @@ const RenderFeed = (props) => {
         //console.log(post)
         const title = post.postData.title
         const body = post.postData.body
+        const date = post.postData.date
         const postkey = post.postKey;
-
 
         return (
             < li key={postkey} className="post-wrapper">
@@ -66,6 +66,7 @@ const RenderFeed = (props) => {
 
                     <h3 className="post-title"> {title}</h3>
                     <p className="post-body"> {body} </p>
+                    <p className="date"> {date}</p>
                 </article>
             </li >)
 
