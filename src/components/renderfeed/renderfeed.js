@@ -45,8 +45,18 @@ const RenderFeed = (props) => {
 
     //use post id as the key and to select delete rendering 
     // console.log(props.postData)
+
+    //const [postObj, setPostObj] = useState()
+
+    // if(props.page = "profile"){
+    //     setPostObj({
+
+    //     })
+    // }
+
     const renderPosts = props.postData.map((post) => {
         //const id = post.postData.postid;
+        console.log(post)
         const title = post.postData.title
         const body = post.postData.body
         const postkey = post.postKey;
@@ -70,9 +80,13 @@ const RenderFeed = (props) => {
 
     })
 
+
+    const renderFeedPosts = null
+
     return (
         <div>
             {renderPosts}
+            {/* {props.page = "profile" ? renderProfilePosts : null} */}
         </div>
     )
 }

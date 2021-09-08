@@ -10,7 +10,7 @@ export function postUsername(username, email, password) {
             email: email,
             password: password,
             username: username,
-            posts: ""
+            posts: "",
         })
 
         console.log('data saved')
@@ -27,7 +27,9 @@ export function postNewThought(subject, body, username, callback) {
     const postData = {
         title: subject,
         body: body,
-        postid: postid
+        postid: postid,
+        timestamp: Date.now(), //millisecons since Jan 1 1970
+        date: new Date() // date string 
     }
 
 

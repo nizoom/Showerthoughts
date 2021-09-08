@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Header from "../header/header";
 import LoginBtn from "../Previewpage/login/loginbtn"
 import "./dashboard.css"
 import { useAuth } from "../../contexts/authcontext";
 import NavMenu from "../navmenu/nav"
+import { getFeed } from "../getdata/getdata";
+import RenderFeed from "../renderfeed/renderfeed";
 
 const Dashboard = () => {
 
@@ -11,6 +13,22 @@ const Dashboard = () => {
 
     const currentUserRef = useRef();
     const accountDataRef = useRef();
+    const postDataRef = useRef();
+
+    //get, format, and store feed in useRef
+    useEffect(() => {
+        (async function () {
+            await getFeed(callback)
+
+            function callback(postsdata) {
+                console.log(postsdata)
+                postDataRef.current = postsdata;
+            }
+        })();
+    })
+
+
+
 
     //save user in a ref
     if (currentUser !== undefined) {
@@ -52,6 +70,9 @@ const Dashboard = () => {
                     </section>
                 </div>
                 : null}
+
+            <button onClick={getFeed}> get Feed</button>
+            <RenderFeed deleteAccess={false} postData={postDataRef.current} page={"feed"} />
 
         </div >
 

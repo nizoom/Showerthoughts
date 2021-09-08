@@ -74,7 +74,7 @@ const ProfilePage = (props) => {
                             </ul> */}
 
                             <RenderFeed postData={postsRef.current} deleteAccess={true}
-                                username={accountData[1].username} />
+                                username={accountData[1].username} page={"profile"} />
                         </div>
                     </section>
 

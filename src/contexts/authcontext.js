@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { auth } from "../firebase/firebase";
 import { postUsername } from "../components/postuserdata/postuserdata";
-import { getUserInfo } from "../components/getuserdata/getuserdata";
+import { getUserInfo } from "../components/getdata/getuserdata";
 // import { getUserInfo } from "../components/getuserdata/getuserdata";
 
 
