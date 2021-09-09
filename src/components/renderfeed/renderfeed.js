@@ -44,11 +44,20 @@ const RenderFeed = (props) => {
         }
     }
 
-    const [updateState, setUpdateState] = useState(false)
+    //const [updateState, setUpdateState] = useState(false)
 
-    function handleUpdate() {
-        setUpdateState(true)
+    const [updatePostKey, setUpdatePostKey] = useState()
+
+    function handleUpdate(postkey) {
+        console.log(postkey)
+        // setUpdateState(true)
         props.toggleDeleteAccess() // make sure to bring back once update is done 
+        setUpdatePostKey(postkey)
+    }
+
+    function defaultProfileView() {
+        setUpdatePostKey(null)
+        props.toggleDeleteAccess();
     }
 
     const renderPosts = props.postData.map((post) => {
@@ -85,7 +94,10 @@ const RenderFeed = (props) => {
 
 
 
-                    {updateState ? <UpdatePost body={body} title={title} postkey={postkey} /> :
+                    {updatePostKey === postkey ?
+
+                        <UpdatePost body={body} title={title} postkey={postkey} reset={defaultProfileView} /> :
+
                         <div>
                             <h3 className="post-title"> {title}</h3>
                             <p className="post-body"> {body} </p>
@@ -99,7 +111,6 @@ const RenderFeed = (props) => {
             </li >)
 
     })
-
 
 
     return (

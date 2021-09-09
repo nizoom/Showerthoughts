@@ -8,6 +8,9 @@ const UpdatePost = (props) => {
         e.preventDefault();
         console.log(updateText)
         //update firebase func
+
+        //reset profile view to default
+        props.reset()
     }
 
     return (
