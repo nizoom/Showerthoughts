@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./profile.css"
 import { useAuth } from "../../contexts/authcontext";
 import Header from "../header/header";
@@ -51,6 +51,11 @@ const ProfilePage = (props) => {
         console.log(postsRef)
     }
 
+    const [deleteAccess, setDeleteAccess] = useState(true)
+
+    function toggleDeleteAccess() {
+        setDeleteAccess(!deleteAccess)
+    }
 
 
     return (
@@ -73,7 +78,8 @@ const ProfilePage = (props) => {
                                 {renderPosts}
                             </ul> */}
 
-                            <RenderFeed postData={postsRef.current} deleteAccess={true}
+                            <RenderFeed postData={postsRef.current} deleteAccess={deleteAccess}
+                                toggleDeleteAccess={toggleDeleteAccess}
                                 username={accountData[1].username} page={"profile"} />
                         </div>
                     </section>

@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import "./renderfeed.css"
 import { deletePost } from "../postuserdata/postuserdata";
 import { toReadableDate } from "./formatpostdate";
-
+import UpdatePost from "./updatepost/updatepost";
 
 const RenderFeed = (props) => {
 
@@ -44,6 +44,12 @@ const RenderFeed = (props) => {
         }
     }
 
+    const [updateState, setUpdateState] = useState(false)
+
+    function handleUpdate() {
+        setUpdateState(true)
+        props.toggleDeleteAccess() // make sure to bring back once update is done 
+    }
 
     const renderPosts = props.postData.map((post) => {
         //const id = post.postData.postid;
@@ -52,21 +58,43 @@ const RenderFeed = (props) => {
         const body = post.postData.body
         const date = toReadableDate(post.postData.date)
         const postkey = post.postKey;
+        const author = post.postData.author;
 
         return (
             < li key={postkey} className="post-wrapper">
                 <article className="article-wrapper">
 
-                    {props.deleteAccess ? <button type="text" className="delete-btn"
-                        onClick={() => handleDeleteClick(postkey)}>
+                    {props.deleteAccess ?
+                        <div>
+                            <button type="text" className="delete-btn"
+                                onClick={() => handleDeleteClick(postkey)}>
 
-                        {postkey === clickedPost ? < p > {deleteState}</p> : "X"}
+                                {postkey === clickedPost ? < p > {deleteState}</p> : "X"}
 
-                    </button> : null}
+                            </button>
 
-                    <h3 className="post-title"> {title}</h3>
-                    <p className="post-body"> {body} </p>
-                    <p className="date"> {date}</p>
+                            <button type="text" className="update-btn"
+                                onClick={() => handleUpdate(postkey)}
+                            >
+                                ✏️
+
+                            </button>
+                        </div>
+
+                        : null}
+
+
+
+                    {updateState ? <UpdatePost body={body} title={title} postkey={postkey} /> :
+                        <div>
+                            <h3 className="post-title"> {title}</h3>
+                            <p className="post-body"> {body} </p>
+                            <p className="date"> {date}</p>
+                            <h4 className="author"> {author} </h4>
+                        </div>
+                    }
+
+
                 </article>
             </li >)
 
@@ -77,7 +105,6 @@ const RenderFeed = (props) => {
     return (
         <div>
             {renderPosts}
-            {/* {props.page = "profile" ? renderProfilePosts : null} */}
         </div>
     )
 }

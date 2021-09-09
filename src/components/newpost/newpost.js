@@ -96,8 +96,3 @@ const NewPostPage = (props) => {
 
 export default NewPostPage;
 
-// () => establishUsername(accountData[1].username)
-
-//ref={subjectThoughtRef}
-
-// ref={textThoughtRef}
