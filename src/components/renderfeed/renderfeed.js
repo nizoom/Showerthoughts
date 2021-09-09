@@ -96,7 +96,9 @@ const RenderFeed = (props) => {
 
                     {updatePostKey === postkey ?
 
-                        <UpdatePost body={body} title={title} postkey={postkey} reset={defaultProfileView} /> :
+                        <UpdatePost body={body} title={title} postkey={postkey} reset={defaultProfileView}
+                            postData={post.postData} username={props.username}
+                        /> :
 
                         <div>
                             <h3 className="post-title"> {title}</h3>

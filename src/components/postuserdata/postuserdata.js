@@ -23,11 +23,11 @@ export function postUsername(username, email, password) {
 
 export function postNewThought(subject, body, username, callback) {
     console.log("posting new messge")
-    const postid = generateID()
+    // const postid = generateID()
     const postData = {
         title: subject,
         body: body,
-        postid: postid,
+        // postid: postid,
         timestamp: Date.now(), //millisecons since Jan 1 1970
         date: new Date(), // date string
         author: username
@@ -64,14 +64,43 @@ export function postNewThought(subject, body, username, callback) {
     }
 }
 
+
+export async function updatePostonDB(postkey, username, newTextBody, errorCallback) {
+    // const updateBody = {
+
+    // }
+    console.log(newTextBody)
+    const updates = {}
+
+    updates[`/users/${username}/posts/${postkey}/body`] = newTextBody
+
+    console.log(updates)
+
+    return firebase.database().ref().update(updates, (error) => {
+        if (error) {
+            console.log(error.messge)
+            errorCallback(false, error.message)
+        } else {
+            errorCallback(true)
+        }
+    })
+
+
+}
+
+
+
+
 //get postkey 
 export async function deletePost(postkey, username) {
     try {
-        database.ref(`users/${username}/posts/${postkey}`).remove()
+        database.ref(`users / ${username} /posts/${postkey} `).remove()
 
     } catch (error) {
         console.log(error.message)
     }
 }
+
+
 
 

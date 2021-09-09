@@ -26,7 +26,7 @@ const ProfilePage = (props) => {
         console.log("called")
 
         //console.log(accountData[1]) //into the users folder
-        console.log(accountData[1])
+        // console.log(accountData[1])
 
         //include postkey in allPostsArr
         let allPostsArr = [];
@@ -48,7 +48,7 @@ const ProfilePage = (props) => {
 
     if (accountData !== undefined) {
         allPosts()
-        console.log(postsRef)
+        // console.log(postsRef)
     }
 
     const [deleteAccess, setDeleteAccess] = useState(true)
