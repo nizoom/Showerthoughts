@@ -14,6 +14,9 @@ const NewPostPage = (props) => {
 
     const [successfulPostMessage, setSuccessfulPostMessage] = useState(false)
 
+    const [thoughtText, setThoughtText] = useState("")
+
+    const [titleText, setTitleText] = useState("")
 
     const usernameRef = useRef()
     //save user data in refs 
@@ -21,20 +24,17 @@ const NewPostPage = (props) => {
         usernameRef.current = accountData[1].username
     }
 
-    const subjectThoughtRef = useRef();
 
-    const textThoughtRef = useRef();
 
 
     function handleNewPostSubmit(e) {
         e.preventDefault();
         //require text in forms 
 
+        const body = thoughtText;
+        const subject = titleText;
+
         // post submission to the db for that user 
-        const subject = subjectThoughtRef.current.value
-        const body = textThoughtRef.current.value
-        // console.log(headerThoughtRef.current.value)
-        // console.log(textThoughtRef.current.value)
         postNewThought(subject, body, usernameRef.current, determinePostSuccess)
 
     }
@@ -45,6 +45,8 @@ const NewPostPage = (props) => {
             setSuccessfulPostMessage(true)
             setTimeout(function () {  // fade out after 3 seconds
                 setSuccessfulPostMessage(false)
+                setThoughtText("")
+                setTitleText("")
             }, 3000);
         } else {
             console.log('failed to add post')
@@ -70,11 +72,12 @@ const NewPostPage = (props) => {
                         <h2> <b> <u> New Post from {usernameRef.current} </u></b> </h2>
                         <div className="subject-field">
                             <label htmlFor="subject"> Subject: </label>
-                            <input type="text" name="text-thought" id="text-thought" ref={subjectThoughtRef} />
+                            <input type="text" name="text-thought" id="text-thought" value={titleText}
+                                onChange={event => setTitleText(event.target.value)} />
                         </div>
                         <div className="textarea-field">
                             <textarea className="textarea is-primary" placeholder="I was thinking..." maxLength="500"
-                                ref={textThoughtRef}
+                                value={thoughtText} onChange={event => setThoughtText(event.target.value)}
                             ></textarea>
                         </div>
                         <div className="submit-newpost-wrapper">
@@ -94,3 +97,7 @@ const NewPostPage = (props) => {
 export default NewPostPage;
 
 // () => establishUsername(accountData[1].username)
+
+//ref={subjectThoughtRef}
+
+// ref={textThoughtRef}

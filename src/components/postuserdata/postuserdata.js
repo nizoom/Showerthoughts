@@ -29,7 +29,8 @@ export function postNewThought(subject, body, username, callback) {
         body: body,
         postid: postid,
         timestamp: Date.now(), //millisecons since Jan 1 1970
-        date: new Date() // date string 
+        date: new Date(), // date string
+        author: username
     }
 
 
